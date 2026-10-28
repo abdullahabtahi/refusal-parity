@@ -570,3 +570,4 @@ whether unequal lengths are the intended case.
 34. **A lint fix can change behaviour.** `strict=True` on a zip that intends truncation turns pairing into a crash; read the intent before satisfying the rule.
 35. **Prove determinism before refactoring against a baseline.** Regenerate from the old code first; otherwise a difference after the move has no meaning.
 36. **A check that cannot fail is not a check.** Delete outputs before regenerating, and treat a missing file as a failure.
+37. **Review delegated visuals against the data, not the screenshot.** A polished chart from another agent had a typed tier footer that put Vietnamese in the wrong tier, and both its caption and the paper's called XSTest prompts MultiJail.

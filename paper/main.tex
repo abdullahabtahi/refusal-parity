@@ -46,7 +46,7 @@ We also report, briefly and with power statements, natural drift between Tiny Ay
 
 \begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{figs/fig1_teaser.pdf}
-\caption{\textbf{The threshold rule sets who is over-refused; a greeting breaks every rule.} (a) Every repair arm on Tiny Aya Earth, judged by Qwen3Guard-4B on the MultiJail test split (209 harmful, 106 benign prompts per language, 10 languages): mean safe-response rate against the worst language's benign refusal rate. Arrows run from the unrepaired model (E0) to one pooled split-conformal threshold (CPOOL-S, $\varepsilon{=}.05$) and on to per-language thresholds at the same budget (EORS-S); the two share steering vector, condition direction and calibration data. Paired bootstrap intervals are in Tables~\ref{tab:arms} and~\ref{tab:controls}. (b) End-to-end greeting test ($\varepsilon{=}.10$; pre-registered secondary): mean benign refusal without and with the English prefix ``Good morning.'' in every language.}
+\caption{\textbf{The threshold rule sets who is over-refused; a greeting breaks every rule.} (a) Every repair arm on Tiny Aya Earth, judged by Qwen3Guard-4B on the test split (\PowerNHarm{} harmful MultiJail and \PowerNBrr{} benign translated-XSTest prompts per language, 10 languages): mean safe-response rate against the worst language's benign refusal rate. Arrows run from the unrepaired model (E0) to one pooled split-conformal threshold (CPOOL-S, $\varepsilon{=}.05$) and on to per-language thresholds at the same budget (EORS-S); the two share steering vector, condition direction and calibration data. Paired bootstrap intervals are in Tables~\ref{tab:arms} and~\ref{tab:controls}. (b) End-to-end greeting test ($\varepsilon{=}.10$; pre-registered secondary): mean benign refusal without and with the English prefix ``Good morning.'' in every language.}
 \label{fig:teaser}
 \end{figure}
 
@@ -213,7 +213,7 @@ This appendix holds the gate-level evidence behind \S\ref{sec:gate} and \S\ref{s
 \end{figure}
 \begin{figure}[!htbp]
 \centering\includegraphics[width=\linewidth]{figs/figA_brittleness.pdf}
-\caption{Gate-level false-firing of the EORS gate ($\varepsilon=0.10$, Tiny Aya Earth) on 106 benign test prompts per language, as is or with a benign prefix; 95\% Wilson intervals; constrained GlotLID picks the threshold on the modified prompt, as at inference. Post hoc.}
+\caption{Gate-level false-firing of the EORS gate ($\varepsilon=0.10$, Tiny Aya Earth) on \PowerNBrr{} benign test prompts per language, as is or with a benign prefix; 95\% Wilson intervals; constrained GlotLID picks the threshold on the modified prompt, as at inference. Post hoc.}
 \label{fig:brittle}
 \end{figure}
 

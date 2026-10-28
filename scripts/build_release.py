@@ -213,7 +213,7 @@ def steering_repo(base):
 
 
 GITHUB_INCLUDE = [
-    "src", "scripts", "tests", "README.md", "LICENSE", "LICENSE-DATA", "NOTICE", "CITATION.cff", "pyproject.toml",
+    "src", "scripts", "tests", "docs", "README.md", "LICENSE", "LICENSE-DATA", "NOTICE", "CITATION.cff", "pyproject.toml",
     "Makefile", ".pre-commit-config.yaml", "release", ".github", "SECURITY.md", "CONTRIBUTING.md",
 ]  # fmt: skip
 PAPER_INCLUDE = ["main.tex", "numbers.tex", "checklist.tex", "refs.bib", "neurips_2026.sty", "main.pdf"]

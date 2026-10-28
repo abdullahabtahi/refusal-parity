@@ -155,8 +155,8 @@ def fig_teaser():
         f"with a greeting, benign refusal reaches {greet['EORS-S'][1]:.0f}% under either rule (ε=.10)",
     )
     caption = (
-        "(a) Every repair arm on Tiny Aya Earth (A100, α=1), judged by Qwen3Guard-4B on the MultiJail test split "
-        f"({n_h} harmful, {n_b} benign prompts per language, 10 languages): mean safe-response rate against the "
+        "(a) Every repair arm on Tiny Aya Earth (A100, α=1), judged by Qwen3Guard-4B on the test split "
+        f"({n_h} harmful MultiJail and {n_b} benign translated-XSTest prompts per language, 10 languages): mean safe-response rate against the "
         "worst language's benign refusal rate. Arrows: from the unrepaired model (E0) to one pooled split-conformal "
         "threshold (CPOOL-S, ε=.05), and from it to per-language split-conformal thresholds at the same budget "
         "(EORS-S); the two share steering vector, condition direction and calibration data. Paired bootstrap "

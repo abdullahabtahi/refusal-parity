@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../../../paper/fonts/SpaceGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../../../paper/fonts/SpaceGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../../../paper/fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('../../../paper/fonts/SpaceMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('../../../paper/fonts/SpaceMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+:root {
+  --bg: #0c1809;
+  --surface: #10200c;
+  --surface-alt: #0d1b0a;
+  --rule: #263d1f;
+  --rule-subtle: #1b2e15;
+  --ink: #eef3ec;
+  --ink-secondary: #9cb095;
+  --ink-muted: #687d61;
+  --lime: #b6f012;
+  --lime-dim: rgba(182, 240, 18, 0.12);
+  --sage: #789a6d;
+  --ochre: #d48c6a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 1420px;
+  background: var(--bg);
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--ink);
+  padding: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Outer architectural frame: sharp editorial 2px radius, 1px hairline */
+.blueprint {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+/* Top Masthead */
+.masthead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface-alt);
+}
+
+.masthead-left {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+.masthead-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--lime);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.masthead-title {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.masthead-right {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.masthead-right span.label {
+  color: var(--ink-muted);
+}
+
+.masthead-right span.sep {
+  color: var(--rule);
+}
+
+/* 4-Column Contiguous Editorial Grid */
+.columns {
+  display: grid;
+  grid-template-columns: 1.02fr 1.48fr 1.08fr 1.04fr;
+  border-bottom: 1px solid var(--rule);
+}
+
+.col {
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+}
+.col:last-child {
+  border-right: none;
+}
+
+/* Column Index Header (Swiss tabular style — no pills!) */
+.col-index {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 18px;
+  border-bottom: 1px solid var(--rule-subtle);
+  font-family: 'Space Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  background: var(--surface-alt);
+}
+
+.col-num {
+  color: var(--lime);
+  font-weight: 700;
+}
+
+.col-tool {
+  color: var(--ink-secondary);
+}
+
+/* Column Narrative Copy */
+.col-copy {
+  padding: 16px 18px 12px 18px;
+  border-bottom: 1px solid var(--rule-subtle);
+  min-height: 104px;
+}
+
+.col-heading {
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.col-body {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-secondary);
+}
+
+.col-body b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Schematic Canvas (subtle technical dot grid, no nested rounded card!) */
+.col-canvas {
+  padding: 14px 18px;
+  flex-grow: 1;
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--rule) 0.75px, transparent 0.75px);
+  background-size: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.canvas-caption {
+  font-family: 'Space Mono', monospace;
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+/* Column Spec Footer */
+.col-spec {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border-top: 1px solid var(--rule-subtle);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  background: var(--surface-alt);
+}
+
+.spec-cell {
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+.spec-cell:first-child {
+  border-right: 1px solid var(--rule-subtle);
+  color: var(--ink);
+}
+.spec-cell:last-child {
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+/* Bottom 8-Cell Subpackage Directory Strip */
+.subpkg-strip {
+  display: grid;
+  grid-template-columns: auto repeat(8, 1fr) auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 10.5px;
+  background: var(--bg);
+}
+
+.strip-cell {
+  padding: 9px 12px;
+  border-right: 1px solid var(--rule-subtle);
+  color: var(--ink-secondary);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.strip-cell:last-child {
+  border-right: none;
+  color: var(--ink-muted);
+}
+.strip-label {
+  color: var(--ink-muted);
+  background: var(--surface-alt);
+}
+.strip-idx {
+  color: var(--lime);
+  font-size: 9.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="blueprint">
+  <!-- Masthead -->
+  <div class="masthead">
+    <div class="masthead-left">
+      <span class="masthead-kicker">System Architecture</span>
+      <span class="masthead-title">Multilingual Refusal Repair &amp; Conformal Gate Audit Pipeline</span>
+    </div>
+    <div class="masthead-right">
+      <span class="label">OPEN-SOURCE STACK:</span>
+      <span>CURATORKIT</span>
+      <span class="sep">/</span>
+      <span>CIRCUITKIT</span>
+      <span class="sep">/</span>
+      <span>SAFETUNE</span>
+      <span class="sep">/</span>
+      <span>AUDITKIT</span>
+    </div>
+  </div>
+
+  <!-- 4 Architectural Phases -->
+  <div class="columns">
+
+    <!-- COL 1: DATA -->
+    <div class="col">
+      <div class="col-index">
+        <span class="col-num">01 // CORPUS</span>
+        <span class="col-tool">CURATORKIT</span>
+      </div>
+      <div class="col-copy">
+        <div class="col-heading">Parallel Prompt Curation</div>
+        <div class="col-body">MultiJail harmful and NLLB-translated XSTest-safe benign prompts, retained only when parallel across all ten languages.</div>
+      </div>
+      <div class="col-canvas">
+        <div class="canvas-caption">TIER STRATIFICATION &amp; QA GATE</div>
+        <svg viewBox="0 0 260 124" width="100%" height="124">
+          <!-- Structural table lines -->
+          <line x1="0" y1="8" x2="188" y2="8" stroke="#263d1f" stroke-width="1"/>
+          <line x1="0" y1="34" x2="188" y2="34" stroke="#1b2e15" stroke-width="1"/>
+          <line x1="0" y1="60" x2="188" y2="60" stroke="#1b2e15" stroke-width="1"/>
+          <line x1="0" y1="86" x2="188" y2="86" stroke="#263d1f" stroke-width="1"/>
+
+          <!-- Tier 1: HRL -->
+          <text x="2" y="25" font-family="Space Mono" font-size="9.5" font-weight="700" fill="#eef3ec">HRL</text>
+          <text x="30" y="25" font-family="Space Mono" font-size="8.5" fill="#9cb095">en·zh·it</text>
+          <rect x="118" y="15" width="38" height="12" fill="#d48c6a" opacity="0.85"/>
+          <rect x="158" y="15" width="28" height="12" fill="#789a6d" opacity="0.85"/>
+
+          <!-- Tier 2: MRL -->
+          <text x="2" y="51" font-family="Space Mono" font-size="9.5" font-weight="700" fill="#eef3ec">MRL</text>
+          <text x="30" y="51" font-family="Space Mono" font-size="8.5" fill="#9cb095">vi·ar·ko·th</text>
+          <rect x="118" y="41" width="38" height="12" fill="#d48c6a" opacity="0.85"/>
+          <rect x="158" y="41" width="28" height="12" fill="#789a6d" opacity="0.85"/>
+
+          <!-- Tier 3: LRL -->
+          <text x="2" y="77" font-family="Space Mono" font-size="9.5" font-weight="700" fill="#eef3ec">LRL</text>
+          <text x="30" y="77" font-family="Space Mono" font-size="8.5" fill="#9cb095">bn·sw·jv</text>
+          <rect x="118" y="67" width="38" height="12" fill="#d48c6a" opacity="0.85"/>
+          <rect x="158" y="67" width="28" height="12" fill="#789a6d" opacity="0.85"/>
+
+          <!-- Vertical QA Filter Plane -->
+          <line x1="198" y1="6" x2="198" y2="88" stroke="#b6f012" stroke-width="1.5"/>
+          <rect x="206" y="16" width="52" height="62" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="232" y="34" text-anchor="middle" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">GlotLID</text>
+          <text x="232" y="48" text-anchor="middle" font-family="Space Mono" font-size="8.5" fill="#9cb095">NLLB chrF</text>
+          <text x="232" y="62" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#687d61">CuratorKIT</text>
+
+          <!-- Minimalist legend -->
+          <rect x="2" y="104" width="8" height="8" fill="#d48c6a"/>
+          <text x="14" y="111" font-family="Space Mono" font-size="8.5" fill="#9cb095">Harmful (MultiJail)</text>
+          <rect x="126" y="104" width="8" height="8" fill="#789a6d"/>
+          <text x="138" y="111" font-family="Space Mono" font-size="8.5" fill="#9cb095">Benign (XSTest)</text>
+        </svg>
+      </div>
+      <div class="col-spec">
+        <div class="spec-cell">data/</div>
+        <div class="spec-cell">→ data/eval.jsonl</div>
+      </div>
+    </div>
+
+    <!-- COL 2: ACTIVATIONS & STEERING -->
+    <div class="col">
+      <div class="col-index">
+        <span class="col-num">02–03 // MECHANISM</span>
+        <span class="col-tool">CIRCUITKIT · SAFETUNE</span>
+      </div>
+      <div class="col-copy">
+        <div class="col-heading">Residual Capture &amp; Conformal Gated Steering</div>
+        <div class="col-body">Projects Tiny Aya last-token residual states onto condition direction <b>c</b> and contrasts one pooled threshold against per-language split-conformal thresholds before steering by <b>v</b>.</div>
+      </div>
+      <div class="col-canvas">
+        <div class="canvas-caption">PROJECTION s(x) = ⟨h_ℓ(x), c⟩ &amp; CALIBRATION RULES</div>
+        <svg viewBox="0 0 390 124" width="100%" height="124">
+          <!-- Left: Residual State Box -->
+          <rect x="2" y="14" width="82" height="86" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="43" y="34" text-anchor="middle" font-family="Space Mono" font-size="9" font-weight="700" fill="#eef3ec">TINY AYA</text>
+          <line x1="12" y1="42" x2="74" y2="42" stroke="#1b2e15" stroke-width="1"/>
+          <text x="43" y="58" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#9cb095">Residual h_ℓ</text>
+          <text x="43" y="73" text-anchor="middle" font-family="Space Mono" font-size="8.5" fill="#687d61">score ⟨h_ℓ, c⟩</text>
+          <text x="43" y="90" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#687d61">+ circuits/</text>
+
+          <!-- Connector -->
+          <line x1="84" y1="57" x2="106" y2="57" stroke="#789a6d" stroke-width="1.2"/>
+          <polygon points="103,54 109,57 103,60" fill="#789a6d"/>
+
+          <!-- Center: Conformal Threshold Comparison -->
+          <rect x="110" y="6" width="166" height="104" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="193" y="21" text-anchor="middle" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#9cb095">SPLIT-CONFORMAL GATE s(x) &gt; τ</text>
+          <line x1="110" y1="27" x2="276" y2="27" stroke="#1b2e15" stroke-width="1"/>
+
+          <!-- Pooled CPOOL-S -->
+          <text x="120" y="43" font-family="Space Mono" font-size="9" font-weight="700" fill="#eef3ec">CPOOL-S</text>
+          <text x="176" y="43" font-family="Space Grotesk" font-size="9" fill="#9cb095">One pooled τ</text>
+          <line x1="120" y1="54" x2="264" y2="54" stroke="#687d61" stroke-width="1.2"/>
+          <line x1="208" y1="48" x2="208" y2="60" stroke="#eef3ec" stroke-width="2"/>
+          <text x="213" y="57" font-family="Space Mono" font-size="8" fill="#9cb095">τ</text>
+
+          <line x1="118" y1="67" x2="268" y2="67" stroke="#1b2e15" stroke-width="1" stroke-dasharray="2,2"/>
+
+          <!-- Per-language EORS-S (Highlighted in subtle botanical lime) -->
+          <rect x="114" y="71" width="158" height="34" fill="rgba(182,240,18,0.06)" stroke="#b6f012" stroke-width="0.8"/>
+          <text x="120" y="84" font-family="Space Mono" font-size="9" font-weight="700" fill="#b6f012">EORS-S</text>
+          <text x="172" y="84" font-family="Space Grotesk" font-size="9" fill="#eef3ec">Per-language τ_ℓ</text>
+          <line x1="120" y1="95" x2="264" y2="95" stroke="#789a6d" stroke-width="1.2"/>
+          <line x1="162" y1="90" x2="162" y2="100" stroke="#b6f012" stroke-width="1.8"/>
+          <line x1="196" y1="90" x2="196" y2="100" stroke="#b6f012" stroke-width="1.8"/>
+          <line x1="234" y1="90" x2="234" y2="100" stroke="#b6f012" stroke-width="1.8"/>
+
+          <!-- Connector to Action -->
+          <line x1="276" y1="40" x2="298" y2="40" stroke="#789a6d" stroke-width="1.2"/>
+          <line x1="276" y1="84" x2="298" y2="84" stroke="#789a6d" stroke-width="1.2"/>
+
+          <!-- Right: Repair Actions -->
+          <rect x="298" y="14" width="88" height="44" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="342" y="31" text-anchor="middle" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">CASTModel</text>
+          <text x="342" y="46" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#b6f012">h_ℓ + α·v_ℓ</text>
+
+          <rect x="298" y="66" width="88" height="36" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="342" y="81" text-anchor="middle" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#9cb095">ReSta / E0</text>
+          <text x="342" y="94" text-anchor="middle" font-family="Space Mono" font-size="7.5" fill="#687d61">Weight / Base</text>
+        </svg>
+      </div>
+      <div class="col-spec">
+        <div class="spec-cell">activations/ · steering/</div>
+        <div class="spec-cell">→ gate_acts_* · arm_config.json</div>
+      </div>
+    </div>
+
+    <!-- COL 3: GENERATION & SCORING -->
+    <div class="col">
+      <div class="col-index">
+        <span class="col-num">04–05 // EVALUATION</span>
+        <span class="col-tool">AUDITKIT · SAFETUNE</span>
+      </div>
+      <div class="col-copy">
+        <div class="col-heading">Paired Decoding &amp; Multi-Judge Audit</div>
+        <div class="col-body">Greedy decoding on matched A100 hardware paired with unrepaired <b>E0</b>, scored across four safety and fidelity instruments.</div>
+      </div>
+      <div class="col-canvas">
+        <div class="canvas-caption">PAIRED GENERATION &amp; MULTI-JUDGE MATRIX</div>
+        <svg viewBox="0 0 275 124" width="100%" height="124">
+          <!-- Top hardware bar -->
+          <rect x="0" y="6" width="275" height="24" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="10" y="21" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">DECODING:</text>
+          <text x="68" y="21" font-family="Space Mono" font-size="8.5" fill="#9cb095">GREEDY (TEMP=0) · PAIRED A100</text>
+
+          <!-- 2x2 Architectural Table for Judges -->
+          <rect x="0" y="38" width="134" height="36" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="8" y="53" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#b6f012">01 Qwen3Guard-4B</text>
+          <text x="8" y="66" font-family="Space Grotesk" font-size="8.5" fill="#9cb095">Primary safety &amp; refusal</text>
+
+          <rect x="141" y="38" width="134" height="36" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="149" y="53" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">02 SafeTune Keywords</text>
+          <text x="149" y="66" font-family="Space Grotesk" font-size="8.5" fill="#9cb095">English lexical baseline</text>
+
+          <rect x="0" y="80" width="134" height="36" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="8" y="95" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">03 GlotLID Fidelity</text>
+          <text x="8" y="108" font-family="Space Grotesk" font-size="8.5" fill="#9cb095">Language drift detection</text>
+
+          <rect x="141" y="80" width="134" height="36" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="149" y="95" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">04 Gemini Comparator</text>
+          <text x="149" y="108" font-family="Space Grotesk" font-size="8.5" fill="#9cb095">Secondary judge check</text>
+        </svg>
+      </div>
+      <div class="col-spec">
+        <div class="spec-cell">generation/ · scoring/</div>
+        <div class="spec-cell">→ runs/*/judged.jsonl</div>
+      </div>
+    </div>
+
+    <!-- COL 4: ANALYSIS & PROVENANCE -->
+    <div class="col">
+      <div class="col-index">
+        <span class="col-num">06–07 // PROVENANCE</span>
+        <span class="col-tool">PRE-REGISTERED</span>
+      </div>
+      <div class="col-copy">
+        <div class="col-heading">Paired Inference &amp; Macro Compilation</div>
+        <div class="col-body">Paired tests over prompt IDs compile directly into LaTeX macros, provenance-locked figures, and three Hugging Face repositories.</div>
+      </div>
+      <div class="col-canvas">
+        <div class="canvas-caption">BYTE-REPRODUCIBLE OUTPUT GRAPH</div>
+        <svg viewBox="0 0 265 124" width="100%" height="124">
+          <!-- Top: Inference box -->
+          <rect x="0" y="6" width="265" height="32" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="10" y="20" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">McNemar (Holm) + Paired Bootstrap</text>
+          <text x="10" y="31" font-family="Space Mono" font-size="8" fill="#687d61">arms_report.json · controls_report.json</text>
+
+          <!-- Orthogonal connectors -->
+          <line x1="64" y1="38" x2="64" y2="52" stroke="#789a6d" stroke-width="1.2"/>
+          <line x1="200" y1="38" x2="200" y2="52" stroke="#789a6d" stroke-width="1.2"/>
+
+          <!-- Bottom Left: Paper Macros -->
+          <rect x="0" y="52" width="128" height="64" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="8" y="67" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#b6f012">PAPER ARTIFACTS</text>
+          <text x="8" y="81" font-family="Space Mono" font-size="8" fill="#eef3ec">paper/numbers.tex</text>
+          <text x="8" y="94" font-family="Space Mono" font-size="8" fill="#9cb095">paper/figs/*.json</text>
+          <text x="8" y="107" font-family="Space Mono" font-size="7.5" fill="#687d61">verified by make verify</text>
+
+          <!-- Bottom Right: 3-Tier HF Release -->
+          <rect x="137" y="52" width="128" height="64" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>
+          <text x="145" y="67" font-family="Space Mono" font-size="8.5" font-weight="700" fill="#eef3ec">HF RELEASE TIERS</text>
+          <text x="145" y="81" font-family="Space Mono" font-size="8" fill="#9cb095">[OPEN]  labels &amp; paper</text>
+          <text x="145" y="94" font-family="Space Mono" font-size="8" fill="#9cb095">[GATED] responses</text>
+          <text x="145" y="107" font-family="Space Mono" font-size="8" fill="#9cb095">[GATED] steering</text>
+        </svg>
+      </div>
+      <div class="col-spec">
+        <div class="spec-cell">analysis/ · reporting/</div>
+        <div class="spec-cell">→ paper/ · hf/release/</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Contiguous 8-Cell Subpackage Strip -->
+  <div class="subpkg-strip">
+    <div class="strip-cell strip-label">SRC/REFUSAL_PARITY/</div>
+    <div class="strip-cell"><span class="strip-idx">01</span>data/</div>
+    <div class="strip-cell"><span class="strip-idx">02</span>activations/</div>
+    <div class="strip-cell"><span class="strip-idx">2b</span>circuits/</div>
+    <div class="strip-cell"><span class="strip-idx">03</span>steering/</div>
+    <div class="strip-cell"><span class="strip-idx">04</span>generation/</div>
+    <div class="strip-cell"><span class="strip-idx">05</span>scoring/</div>
+    <div class="strip-cell"><span class="strip-idx">06</span>analysis/</div>
+    <div class="strip-cell"><span class="strip-idx">07</span>reporting/</div>
+    <div class="strip-cell">SHARED: common.py · track.py</div>
+  </div>
+</div>
+
+</body>
+</html>

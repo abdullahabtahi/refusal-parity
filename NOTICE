@@ -5,6 +5,9 @@ LICENSES IN THIS REPOSITORY
   Code (src/, scripts/, tests/, Makefile, configuration)   Apache License 2.0      -> LICENSE
   Data, model outputs, judgments, aggregates, figures,     CC BY-NC 4.0            -> LICENSE-DATA
   the paper and its generated tables (paper/, hf/ exports)
+  README visuals (docs/assets/)                              CC BY-NC 4.0; the banner artwork is
+                                                            AI-generated for this project. Charts and diagram
+                                                            are rendered from docs/assets/src/.
   Fonts (paper/fonts/: Space Grotesk, Space Mono)           SIL Open Font License 1.1 -> paper/fonts/OFL.txt
 
 CC BY-NC 4.0 covers this project's own contributions: the machine translations, model outputs, judge labels,
