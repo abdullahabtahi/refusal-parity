@@ -28,7 +28,7 @@ extra_gated_button_content: "Request access"
 
 # Refusal Parity: steering artifacts (gated)
 
-**Abdullah Ibn Mahdi Abtahi** (Ingramin, [abdullah.abtahi@ingramin.com](mailto:abdullah.abtahi@ingramin.com)) · v{{version}} · open data, findings and paper:
+**Abdullah Ibn Mahdi Abtahi** · Ingramin · v{{version}} · open data, findings and paper:
 [`abdullahabtahi/refusal-parity`](https://huggingface.co/datasets/abdullahabtahi/refusal-parity)
 
 > ⚠️ **Dual use.** The steering vectors and condition directions encode Tiny Aya's refusal behaviour. Added, they
@@ -139,3 +139,8 @@ result files by script.
   note         = {Version {{version}}}
 }
 ```
+
+## Contact
+
+Abdullah Ibn Mahdi Abtahi, [abdullah.abtahi@ingramin.com](mailto:abdullah.abtahi@ingramin.com). Questions are welcome in this repository's Community tab; please report harmful
+content or misuse concerns privately by email.

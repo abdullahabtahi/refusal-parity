@@ -7,7 +7,7 @@
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](pyproject.toml)
 [![Data on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20data-refusal--parity-yellow.svg)](https://huggingface.co/datasets/abdullahabtahi/refusal-parity)
 
-**Abdullah Ibn Mahdi Abtahi** (Ingramin, [abdullah.abtahi@ingramin.com](mailto:abdullah.abtahi@ingramin.com)) ·
+**Abdullah Ibn Mahdi Abtahi** · Ingramin ·
 paper: [`paper/main.pdf`](paper/main.pdf) · v0.2.0
 
 This repository audits whether *refusal repair* (activation steering gated per prompt, and weight-space repair) treats
@@ -117,3 +117,9 @@ result files by script. The paper's AI-use disclosure gives details.
 ## Citation
 
 See [`CITATION.cff`](CITATION.cff).
+
+## Contact
+
+Abdullah Ibn Mahdi Abtahi, [abdullah.abtahi@ingramin.com](mailto:abdullah.abtahi@ingramin.com). Questions and reproduction reports are welcome as
+[issues](https://github.com/abdullahabtahi/refusal-parity/issues); report security or misuse concerns privately as
+described in [`SECURITY.md`](SECURITY.md).
