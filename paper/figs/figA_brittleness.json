@@ -3,6 +3,6 @@
  "alt_text": "Grouped bars for five languages; original prompts 6-16%, prefixed prompts 37-82%.",
  "provenance": {
   "source": "runs/spoof/{spoof,control}.json",
-  "script": "src/figures_core.py:fig_brittle"
+  "script": "src/refusal_parity/reporting/figures_results.py:fig_brittle"
  }
 }

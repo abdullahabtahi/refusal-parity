@@ -10,11 +10,11 @@ ARM=$1; D=../runs/$ARM
 n_resp=$(wc -l < $D/responses.jsonl); n_judged=$(wc -l < $D/colab/judged.jsonl)
 (( n_resp == n_judged )) || { echo "row mismatch: $n_resp responses vs $n_judged judged"; exit 1; }
 cp $D/colab/judged.jsonl $D/colab/auditkit.json $D/
-$PY fill_lang.py $D/judged.jsonl 2>&1 | grep -v -i warning | tail -1
+$PY -m refusal_parity.scoring.fill_lang $D/judged.jsonl 2>&1 | grep -v -i warning | tail -1
 if [[ -s $D/gemini_judged.jsonl ]]; then
-  $PY merge_gemini.py $D | tail -1
+  $PY -m refusal_parity.scoring.merge_gemini $D | tail -1
   judges=(q3g4b gem)
 else
   echo "no Gemini labels for $ARM: logging the Qwen3Guard judge only"; judges=(q3g4b)
 fi
-for j in $judges; do $PY -u track.py cond $ARM --judge $j 2>&1 | grep -E "^logged|Error"; done
+for j in $judges; do $PY -u -m refusal_parity.track cond $ARM --judge $j 2>&1 | grep -E "^logged|Error"; done

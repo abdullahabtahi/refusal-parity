@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = ("runs/arms_report.json", "runs/controls_report.json", "paper/numbers.tex", "paper/table_controls.tex")
-STEPS = ("arms_report.py", "controls_report.py", "paper_numbers.py")
+STEPS = ("analysis.arms_report", "analysis.controls_report", "reporting.paper_numbers")  # refusal_parity.<step>
 
 
 def digests():
@@ -27,7 +27,9 @@ def main():
     before = digests()
     for step in STEPS:
         print(f"running {step} ...", flush=True)
-        subprocess.run([sys.executable, step], cwd=ROOT / "src", check=True, stdout=subprocess.DEVNULL)
+        subprocess.run(
+            [sys.executable, "-m", f"refusal_parity.{step}"], cwd=ROOT / "src", check=True, stdout=subprocess.DEVNULL
+        )
     changed = [f for f, h in digests().items() if h != before[f]]
     if changed:
         sys.exit("NOT reproduced:\n  " + "\n  ".join(changed))

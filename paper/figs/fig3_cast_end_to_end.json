@@ -69,6 +69,6 @@
   "rho": -0.23220815841472026,
   "layer": 14,
   "source": "runs/{G-EN,CAST-EN}_a100/judged.jsonl, runs/mech_earth/calib_acts.pt",
-  "script": "src/figures_core.py:fig_cast"
+  "script": "src/refusal_parity/reporting/figures_results.py:fig_cast"
  }
 }

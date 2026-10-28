@@ -4,8 +4,8 @@ import json
 
 import torch
 
-import analyze
-from steer import GateModel
+from refusal_parity.analysis import analyze
+from refusal_parity.steering.steer import GateModel
 
 
 def _write_run(root, rows):

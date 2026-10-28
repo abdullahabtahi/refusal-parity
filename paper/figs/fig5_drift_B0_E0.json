@@ -6,7 +6,7 @@
    "runs/B0/judged.jsonl",
    "runs/E0/judged.jsonl"
   ],
-  "script": "src/figures.py:fig_drift",
+  "script": "src/refusal_parity/reporting/figures_diagnostics.py:fig_drift",
   "table": {
    "q3g4b": {
     "harm": {

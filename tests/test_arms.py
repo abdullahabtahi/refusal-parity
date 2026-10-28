@@ -4,8 +4,8 @@ languages whose activations are shifted differently; a single pooled threshold d
 import numpy as np
 import torch
 
-import arms
-from common import LANGS
+from refusal_parity.common import LANGS
+from refusal_parity.steering import arms
 
 
 def synthetic_acts(n=200, layers=4, d=32, seed=0):

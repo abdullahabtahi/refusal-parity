@@ -6,6 +6,6 @@
    "../runs/mech_global/calib_acts.pt",
    "../runs/mech_global/test_acts.pt"
   ],
-  "script": "src/gate_proxy.py:matched_comparison"
+  "script": "src/refusal_parity/analysis/gate_proxy.py:matched_comparison"
  }
 }

@@ -4,7 +4,7 @@ Needs the Qwen3Guard tokenizer (HF cache or network); CPU, seconds."""
 
 from transformers import AutoTokenizer
 
-import judge
+from refusal_parity.scoring import judge
 
 TOK = AutoTokenizer.from_pretrained("Qwen/Qwen3Guard-Gen-4B")
 

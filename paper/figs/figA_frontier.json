@@ -3,6 +3,6 @@
  "alt_text": "Two line charts. Left: the per-language curve lies below the pooled one for worst-language false-firing. Right: at the same mean false-firing, per-language thresholds detect fewer low-resource and more high-resource harmful prompts than the pooled threshold.",
  "provenance": {
   "source": "runs/controls_report.json frontier",
-  "script": "src/figures_core.py:fig_frontier"
+  "script": "src/refusal_parity/reporting/figures_results.py:fig_frontier"
  }
 }

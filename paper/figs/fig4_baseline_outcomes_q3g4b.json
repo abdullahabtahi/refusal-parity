@@ -4,7 +4,7 @@
  "provenance": {
   "source": "runs/B0/judged.jsonl",
   "judge": "q3g4b",
-  "script": "src/figures.py:outcome_table",
+  "script": "src/refusal_parity/reporting/figures_diagnostics.py:outcome_table",
   "table": {
    "en": {
     "harmful": 0.023923444976076555,

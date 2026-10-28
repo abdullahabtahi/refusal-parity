@@ -16,6 +16,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import time
 from pathlib import Path
 
@@ -31,15 +32,13 @@ from pathlib import Path
 ARMS = {arms!r}
 BATCH = {batch!r}
 # The mount path differs across Kaggle images (/kaggle/input/<slug> vs nested), so locate the inputs by content
-INP = next(Path("/kaggle/input").rglob("audit.py")).parent
+INP = next(Path("/kaggle/input").rglob("src.tgz")).parent
 missing = [a for a in ARMS if not (INP / f"{{a}}.responses.jsonl").exists()]
 assert not missing, f"inputs missing under {{INP}}: {{missing}}"
 print("inputs at", INP, flush=True)
 W = Path("/kaggle/working")
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "auditkit[transformers]==1.1.3", "safetune==0.1.10", "transformers==5.20.2"], check=True)
-(W / "src").mkdir(exist_ok=True)
-for f in INP.glob("*.py"):
-    shutil.copy(f, W / "src" / f.name)
+shutil.unpack_archive(INP / "src.tgz", W)  # -> /kaggle/working/src/refusal_parity
 procs = []
 for i, arm in enumerate(ARMS):
     (W / "runs" / arm).mkdir(parents=True, exist_ok=True)
@@ -47,7 +46,7 @@ for i, arm in enumerate(ARMS):
     env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(i % 2), JUDGE_BATCH=BATCH,
                PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
     log = open(W / f"{{arm}}.score.log", "w")
-    procs.append((arm, subprocess.Popen([sys.executable, "-u", "audit.py", "score", f"../runs/{{arm}}/responses.jsonl",
+    procs.append((arm, subprocess.Popen([sys.executable, "-u", "-m", "refusal_parity.scoring.audit", "score", f"../runs/{{arm}}/responses.jsonl",
                                          "--no-lid"], cwd=W / "src", env=env, stdout=log, stderr=subprocess.STDOUT)))
     if i % 2 == 1:  # two GPUs: wait for this pair before starting the next
         for a, p in procs[-2:]:
@@ -67,8 +66,12 @@ def push(arms):
     ds = STAGE / DATASET
     shutil.rmtree(ds, ignore_errors=True)
     ds.mkdir(parents=True)
-    for f in (ROOT / "src").glob("*.py"):
-        shutil.copy(f, ds / f.name)
+    with tarfile.open(ds / "src.tgz", "w:gz") as tar:  # the package tree; Kaggle datasets flatten folders
+        tar.add(
+            ROOT / "src" / "refusal_parity",
+            arcname="src/refusal_parity",
+            filter=lambda t: None if "__pycache__" in t.name else t,
+        )
     for arm in arms:
         shutil.copy(ROOT / "runs" / arm / "responses.jsonl", ds / f"{arm}.responses.jsonl")
     (ds / "dataset-metadata.json").write_text(

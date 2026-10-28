@@ -3,6 +3,6 @@
  "alt_text": "Two dot plots by language. Benign refusal: EORS-S is lower than CPOOL-S in Thai, Javanese and Bengali and slightly higher in high-resource languages. Harmful refusal: EORS-S is lower in Javanese, Bengali and Thai and higher in Italian and English.",
  "provenance": {
   "source": "runs/{E0,CPOOL-S_e05,EORS-S_e05}_a100/judged.jsonl",
-  "script": "src/figures_core.py:fig_eors"
+  "script": "src/refusal_parity/reporting/figures_results.py:fig_eors"
  }
 }

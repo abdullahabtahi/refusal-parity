@@ -3,6 +3,6 @@
  "alt_text": "Three panels. Detection AUROC rises to about 0.95-0.99 by mid layers for nine languages (grey); jv (blue) peaks lower and declines in late layers. The projection gap grows with depth and is smallest for jv. A cosine heatmap shows most language directions are similar (0.7-0.95), with zh and jv the least aligned.",
  "provenance": {
   "source": "../runs/mech_global/mech.npz",
-  "script": "src/mech.py"
+  "script": "src/refusal_parity/activations/mech.py"
  }
 }

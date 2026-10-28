@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from common import read_jsonl, write_jsonl  # noqa: E402
+from refusal_parity.common import read_jsonl, write_jsonl  # noqa: E402
 
 OWNER = "abdullahabtahi"
 OPEN = ("refusal-parity", "dataset")

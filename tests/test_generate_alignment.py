@@ -3,7 +3,7 @@ indices handed to on_batch are exactly the rows encoded in that batch, and that 
 
 import torch
 
-import generate
+from refusal_parity.generation import generate
 
 
 class Enc(dict):

@@ -10,11 +10,11 @@ for spec in "$@"; do
   name=${spec%%|*}; args=${spec#*|}; dir=../runs/$name
   echo "=== $(date +%H:%M) $name :: $args"
   if [[ ! -s $dir/responses.jsonl ]]; then
-    eval "$PY -u run_arm.py $args" 2>&1 | grep -E "responses ->|Error|Traceback|assert"
+    eval "$PY -u -m refusal_parity.generation.run_arm $args" 2>&1 | grep -E "responses ->|Error|Traceback|assert"
     [[ -s $dir/responses.jsonl ]] || { echo "FAILED generate $name"; continue; }
   fi
   [[ -s $dir/gemini_judged.jsonl ]] || \
-    ( $PY -u gemini.py judge $dir/responses.jsonl $dir/gemini_judged.jsonl --concurrency 12 > $dir/gemini.log 2>&1 ) &
+    ( $PY -u -m refusal_parity.scoring.gemini judge $dir/responses.jsonl $dir/gemini_judged.jsonl --concurrency 12 > $dir/gemini.log 2>&1 ) &
   echo "=== $(date +%H:%M) $name generated"
 done
 wait

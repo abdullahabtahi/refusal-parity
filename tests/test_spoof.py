@@ -1,6 +1,6 @@
 """spoof.summarise: firing rates, language-ID flip rates and paired deltas vs the original prompt. CPU, instant."""
 
-import spoof
+from refusal_parity.analysis import spoof
 
 
 def rec(i, cond, fires, detected="ar"):

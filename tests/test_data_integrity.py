@@ -4,7 +4,7 @@ from collections import defaultdict
 
 import pytest
 
-from common import DATA, LANGS, read_jsonl
+from refusal_parity.common import DATA, LANGS, read_jsonl
 
 EVAL = DATA / "eval.jsonl"
 pytestmark = pytest.mark.skipif(not EVAL.exists(), reason="data/eval.jsonl not present (fetch with `make data`)")

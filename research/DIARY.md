@@ -475,6 +475,60 @@ an AI agent." The agent did not plan the study, and the accountability clause is
 **Hardware.** The card first called the α = 0.5 runs "Apple MPS", because their tag lacks `a100`. Their
 `colab_timing.json` records an A100, so hardware is now read from that record.
 
+## 38. One package, one subpackage per stage (2026-10-28 evening)
+
+**Why.** `src/` was 35 flat scripts. Every file was clear, but the folder did not say which pipeline stage each
+belonged to. Some boundaries overlapped (two figure files split by history, scoring spread over five files), and
+`paper_numbers.py` had grown to 892 lines. The repository is now a portfolio piece, and structure is the first thing
+a reviewing engineer sees.
+
+**What changed.**
+- **Package.** `src/refusal_parity/` has one subpackage per stage, and modules run from `src/` as
+  `python -m refusal_parity.<stage>.<module>`. Running from `src/` keeps every recorded `../runs/` argument valid,
+  and the remote jobs ship the package tree.
+- **Renames.** Only names that described history rather than purpose changed.
+- **Side effects.** Four scripts did their work at import time; they now keep it in `main()`.
+- **`paper_numbers`** is split into one module per paper part. `__main__` keeps the original call order, which
+  fixes the order of `numbers.tex`.
+
+Old → new (research logs dated before this entry use the old paths):
+
+| Subpackage | Modules |
+|---|---|
+| `(package root)` | common, track |
+| `data` | translate_xstest, build_data, build_pgp_val |
+| `activations` | mech, gate_acts |
+| `steering` | arms, steer, lazy_sd, alpha_pick → choose_alpha |
+| `generation` | generate, run_arm, smoke_test |
+| `scoring` | audit, judge, gemini, merge_gemini, fill_lang, validate_judges |
+| `analysis` | analyze, arms_report, controls_report, h1, h3, gate_proxy, failure_gate, spoof |
+| `circuits` | circuit_spec, colab_circuit, circuits → compare |
+| `reporting` | cohere_style, figures_core → figures_results, figures → figures_diagnostics, paper_numbers → paper_numbers/ (core, measurement, mechanism, end_to_end, controls, operations) |
+
+**Verification.**
+- Before moving anything, I regenerated every output from the old layout and confirmed it was deterministic.
+  Matplotlib PDFs embed a timestamp, so PNG pixels are the figure test.
+- After the move:
+  - both pre-registered reports were compared byte for byte;
+  - the 524 macro values in `numbers.tex` were compared, setting aside the source comments, which now name the
+    new paths;
+  - the generated tables were compared below their header line;
+  - every figure PNG was compared.
+- A new test imports all modules with an empty argument list.
+
+**Two verification mistakes, caught before anything shipped.**
+- **The first comparison passed without regenerating anything.** `make` chained `cd src && …` twice on one recipe line,
+  so the second step failed. The comparison then matched the untouched old files, and it counted a missing file as
+  identical. The strict rerun deletes every output first and treats a missing file as a failure.
+- **One figure's committed PNG was stale.** It was from Oct 27, outside `make figures`, and older than the figure
+  style. Regenerating it with the pre-refactor code in a temporary worktree gave the same bytes as the new package,
+  so the refactor preserves it. It is now in `make figures`.
+
+**A bug I had introduced, found on the way.** The earlier lint pass added `zip(..., strict=True)` to the CircuitKIT
+spec's length-bucket pairing. That turns "pair up to the shorter bucket" into a crash. The spec in the paper
+predates the change, so no result is affected. Lesson: a lint fix that adds `strict=` changes behaviour, so check
+whether unequal lengths are the intended case.
+
 ## Running list of learnings
 
 1. **Novelty checks belong before the method, not after.** A 2-minute abstract read reshaped the paper.
@@ -513,3 +567,6 @@ an AI agent." The agent did not plan the study, and the accountability clause is
     only a from-scratch rebuild exposed.
 32. **Absent and null are different data.** An all-null column claims a measurement was made; omit it instead.
 33. **Read the code before "fixing" metadata about it.** A plausible correction (ε for every gated arm) was wrong.
+34. **A lint fix can change behaviour.** `strict=True` on a zip that intends truncation turns pairing into a crash; read the intent before satisfying the rule.
+35. **Prove determinism before refactoring against a baseline.** Regenerate from the old code first; otherwise a difference after the move has no meaning.
+36. **A check that cannot fail is not a check.** Delete outputs before regenerating, and treat a missing file as a failure.

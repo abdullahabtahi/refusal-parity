@@ -65,6 +65,6 @@
   },
   "judge": "q3g4b",
   "source": "runs/*_a100/judged.jsonl (incl. *_greet_a100)",
-  "script": "src/figures_core.py:fig_teaser"
+  "script": "src/refusal_parity/reporting/figures_results.py:fig_teaser"
  }
 }

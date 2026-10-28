@@ -3,11 +3,9 @@
 import numpy as np
 import pandas as pd
 
-import analyze
-import arms
-import arms_report
-import controls_report
-from common import LANGS
+from refusal_parity.analysis import analyze, arms_report, controls_report
+from refusal_parity.common import LANGS
+from refusal_parity.steering import arms
 
 
 def test_conformal_threshold_meets_its_budget_on_average():

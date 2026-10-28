@@ -21,7 +21,7 @@ make verify           # if you touched analysis code: every paper number must be
 
 ## Conventions
 
-- **Results.** Never type a result into the paper, README or a card. Add a macro in `src/paper_numbers.py` and
+- **Results.** Never type a result into the paper, README or a card. Add a macro in `src/refusal_parity/reporting/paper_numbers/` and
   name its source file.
 - **Analysis plan.** Changes to the analysis go into the dated deviations log
   (`research/00_research_plan.md`), labelled confirmatory, exploratory or post hoc.

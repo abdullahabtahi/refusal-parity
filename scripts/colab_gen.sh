@@ -3,14 +3,14 @@
 # HF token by `colab upload` only (Tiny Aya is gated); the VM is always stopped.
 # Usage: COLAB_SSH_KEY=<private key> [GPU=A100] [SESSION=gen-job] [ACTS=runs/mech_earth/calib_acts.pt] \
 #          scripts/colab_gen.sh "NAME|run_arm args" ...
-#   Other jobs (e.g. Qwen3Guard scoring): SCRIPT=audit.py JOB_ENV="JUDGE_BATCH=4" FETCH="judged.jsonl auditkit.json"
+#   Other jobs (e.g. Qwen3Guard scoring): SCRIPT="-m refusal_parity.scoring.audit" JOB_ENV="JUDGE_BATCH=4" FETCH="judged.jsonl auditkit.json"
 #   OUTSUB=colab INPUTS="runs/X/responses.jsonl ..." ACTS=none  "X|score ../runs/X/responses.jsonl --no-lid"
 #   NAME = run dir under runs/ (use --tag so A100 runs never overwrite the Mac's). Outputs: runs/NAME/, timing in
 #   runs/NAME/colab_timing.json. Keep --batch equal to the Mac's (16) so hardware is the only difference.
 set -eu
 cd "${0:A:h}/.."
 C="$PWD/.venv/bin/colab"; S=${SESSION:-gen-job}; GPU=${GPU:-A100}; ACTS=${ACTS:-runs/mech_earth/calib_acts.pt}
-SCRIPT=${SCRIPT:-run_arm.py}; JOB_ENV=${JOB_ENV:-}; FETCH=${FETCH:-responses.jsonl arm_config.json}; OUTSUB=${OUTSUB:-}; INPUTS=${INPUTS:-}
+SCRIPT=${SCRIPT:-"-m refusal_parity.generation.run_arm"}; JOB_ENV=${JOB_ENV:-}; FETCH=${FETCH:-responses.jsonl arm_config.json}; OUTSUB=${OUTSUB:-}; INPUTS=${INPUTS:-}
 out_dir() { echo runs/$1${OUTSUB:+/$OUTSUB}; }  # where a finished job's outputs land locally
 K=${COLAB_SSH_KEY:?set COLAB_SSH_KEY to the private key whose public half the Colab session trusts}
 R() { ssh -i $K -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR -o ConnectTimeout=60 -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
@@ -31,7 +31,7 @@ retry() { for k in 1 2 3; do "$@" && return 0; echo "[driver] retry $k: ${1:t}";
 retry R "mkdir -p /root/.cache/huggingface /content/src /content/data /content/runs /content/${ACTS:h}" || exit 1
 retry $C upload -s $S ~/.cache/huggingface/token /root/.cache/huggingface/token </dev/null || { echo "[driver] token upload failed"; exit 1; }
 # Code + data as one archive over scp: ~30 single-file uploads through the Colab API failed on a flaky link.
-bundle=$(mktemp -t colab_bundle).tgz; tar czf $bundle src/*.py data/eval.jsonl data/lid_cache.json ${=INPUTS}
+bundle=$(mktemp -t colab_bundle).tgz; tar czf $bundle --exclude __pycache__ --exclude '*.pyc' src/refusal_parity data/eval.jsonl data/lid_cache.json ${=INPUTS}
 retry P $bundle /content/bundle.tgz && retry R "cd /content && tar xzf bundle.tgz" || { echo "[driver] bundle upload failed"; exit 1; }
 [[ $ACTS == none ]] || retry P $ACTS /content/$ACTS || { echo "[driver] scp failed: $ACTS"; exit 1; }
 # One script file runs every arm in sequence and records wall time per arm (model load included, as on the Mac).

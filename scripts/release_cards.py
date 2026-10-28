@@ -11,7 +11,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from common import BOOT_SEED, DATA, LANGS, NAMES, RUNS, SEED, SPLIT_SEED, TIERS, read_jsonl
+from refusal_parity.common import BOOT_SEED, DATA, LANGS, NAMES, RUNS, SEED, SPLIT_SEED, TIERS, read_jsonl
 
 ROOT = Path(__file__).resolve().parents[1]
 CARDS = ROOT / "release" / "cards"
@@ -35,7 +35,7 @@ def macros():
 
 def data_facts():
     """Counts read from the released prompt files, so the card describes exactly what ships."""
-    import build_data  # translation-QA thresholds and calibration sizes are defined there
+    from refusal_parity.data import build_data  # translation-QA thresholds and calibration sizes are defined there
 
     rows = read_jsonl(DATA / "eval.jsonl")
     ids = lambda kind, split=None: {r["id"] for r in rows if r["kind"] == kind and split in (None, r["split"])}

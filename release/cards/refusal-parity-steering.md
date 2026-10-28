@@ -83,8 +83,8 @@ meta = json.load(open("arms/index.json"))["EORS-S_eps0.05"]
 acts = torch.load("activations/mech_earth/calib_acts.pt", weights_only=True)
 ```
 
-The code repository does not read these files: `src/run_arm.py` refits each arm from
-`activations/mech_earth/calib_acts.pt` with `src/arms.py` and applies it with `src/steer.py`. The safetensors are
+The code repository does not read these files: `src/refusal_parity/generation/run_arm.py` refits each arm from
+`activations/mech_earth/calib_acts.pt` with `src/refusal_parity/steering/arms.py` and applies it with `src/refusal_parity/steering/steer.py`. The safetensors are
 exported from that same fit, so they equal what the runs applied, for use outside the code.
 
 ## Intended use

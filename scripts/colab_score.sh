@@ -14,10 +14,11 @@ trap 'exit 130' INT TERM
 $C new -s $S --gpu T4 </dev/null
 for t in 1 2 3 4 5 6; do R true && break || { echo "[driver] ssh not ready (try $t)"; sleep 15; }; done  # sshd lags READY
 R "mkdir -p /content/src /content/runs/$ARM"
-for f in src/*.py; do $C upload -s $S $f /content/$f </dev/null >/dev/null; done
+bundle=$(mktemp -t colab_src).tgz; tar czf $bundle --exclude __pycache__ --exclude '*.pyc' src/refusal_parity
+$C upload -s $S $bundle /content/src.tgz </dev/null >/dev/null && R "cd /content && tar xzf src.tgz"
 $C upload -s $S runs/$ARM/responses.jsonl /content/runs/$ARM/responses.jsonl </dev/null
 # fds detached: otherwise the job inherits this SSH session's channel and the launch call blocks until it ends
-R "cd /content; (pip install -q 'transformers==5.20.2' 'safetune==0.1.10' 'auditkit[transformers]==1.1.3' 'accelerate==1.15.0' > install.log 2>&1 && cd src && JUDGE_BATCH=4 python -u audit.py score ../runs/$ARM/responses.jsonl --no-lid > ../score.log 2>&1) </dev/null >/dev/null 2>&1 & echo \$! > /content/job.pid; echo started"
+R "cd /content; (pip install -q 'transformers==5.20.2' 'safetune==0.1.10' 'auditkit[transformers]==1.1.3' 'accelerate==1.15.0' > install.log 2>&1 && cd src && JUDGE_BATCH=4 python -u -m refusal_parity.scoring.audit score ../runs/$ARM/responses.jsonl --no-lid > ../score.log 2>&1) </dev/null >/dev/null 2>&1 & echo \$! > /content/job.pid; echo started"
 done_=0
 for i in $(seq 1 240); do  # up to 6 h: polling starts at launch now, and B0 (3,150 rows, two judges, bf16) took ~3 h
   sleep 90

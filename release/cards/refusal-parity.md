@@ -195,7 +195,7 @@ offline from calibration activations only.
 
 - **Seeds:** {{seed}} (data splits, per-language bootstrap), {{boot_seed}} (tier and difference-in-differences
   bootstraps), {{split_seed}} (calibration fit/conformal split).
-- **Pinned inputs:** model and dataset revisions are pinned in the code (`src/common.py`, `REVISIONS`).
+- **Pinned inputs:** model and dataset revisions are pinned in the code (`src/refusal_parity/common.py`, `REVISIONS`).
 - **Library versions:** per run in `runs/**/colab_versions.txt` and `runs/mac_versions.txt`.
 - **Hardware:** A100 for all paired comparisons; the A100-vs-MPS difference is reported, never mixed.
 - **Checks:** reproduction from these files was verified byte-for-byte before release.

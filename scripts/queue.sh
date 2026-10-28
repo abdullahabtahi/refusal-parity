@@ -11,15 +11,15 @@ for spec in "$@"; do
   dir=../runs/$name
   echo "=== $(date +%H:%M) $name :: $args"
   if [[ ! -s $dir/responses.jsonl ]]; then
-    eval "$PY -u run_arm.py $args" 2>&1 | grep -vE "Warning|redirects|Loading weights"
+    eval "$PY -u -m refusal_parity.generation.run_arm $args" 2>&1 | grep -vE "Warning|redirects|Loading weights"
     [[ -s $dir/responses.jsonl ]] || { echo "FAILED generate $name"; continue; }
   fi
-  ( $PY -u gemini.py judge $dir/responses.jsonl $dir/gemini_judged.jsonl --concurrency 12 > $dir/gemini.log 2>&1 ) &
+  ( $PY -u -m refusal_parity.scoring.gemini judge $dir/responses.jsonl $dir/gemini_judged.jsonl --concurrency 12 > $dir/gemini.log 2>&1 ) &
   gem_pid=$!
-  $PY -u audit.py score $dir/responses.jsonl 2>&1 | grep -E "AuditKIT run|Error|Traceback" || echo "FAILED score $name"
-  $PY -u track.py cond $name --judge q3g4b 2>&1 | grep -E "^logged|Error"
+  $PY -u -m refusal_parity.scoring.audit score $dir/responses.jsonl 2>&1 | grep -E "AuditKIT run|Error|Traceback" || echo "FAILED score $name"
+  $PY -u -m refusal_parity.track cond $name --judge q3g4b 2>&1 | grep -E "^logged|Error"
   # Gemini finishes in the cloud; merge and log it when ready, without blocking the next arm on the GPU.
-  ( while kill -0 $gem_pid 2>/dev/null; do sleep 20; done; $PY merge_gemini.py $dir && $PY -u track.py cond $name --judge gem 2>&1 | grep -E "^logged|Error" ) &
+  ( while kill -0 $gem_pid 2>/dev/null; do sleep 20; done; $PY -m refusal_parity.scoring.merge_gemini $dir && $PY -u -m refusal_parity.track cond $name --judge gem 2>&1 | grep -E "^logged|Error" ) &
   echo "=== $(date +%H:%M) $name done"
 done
 wait

@@ -36,28 +36,22 @@ Equal false-refusal rates across languages whose gate-score distributions differ
 
 ## How the study is organised
 
-| Stage | What happens | Code | Output |
+The code is one package, `src/refusal_parity/`, with a subpackage per pipeline stage. Every module opens with a
+docstring stating its purpose, the paper section it serves and its outputs. Run modules from `src/` as
+`python -m refusal_parity.<stage>.<module>`; the `Makefile` wraps the common entry points.
+
+| Stage | What happens | Subpackage (main modules) | Output |
 |---|---|---|---|
-| 1. Data | MultiJail (harmful) + XSTest-safe translated with NLLB (benign), QA by GlotLID and back-translation chrF; CuratorKIT clean / dedup / provenance; ids kept only if parallel in all 10 languages | `translate_xstest.py`, `build_data.py` | `data/eval.jsonl` |
-| 2. Activations | Last-token residual stream at every layer (decoder only, hooks) | `mech.py`, `gate_acts.py` | `runs/mech_*`, `runs/gate_acts_*` |
-| 3. Arms | Steering vectors, condition directions and gate thresholds fitted offline from calibration activations; built on SafeTune's `CASTModel` | `arms.py`, `steer.py` | `arm_config.json` per run |
-| 4. Generation | AuditKIT `generate` with each arm (A100 via `scripts/colab_gen.sh`) | `run_arm.py`, `generate.py` | `runs/<arm>/responses.jsonl` |
-| 5. Scoring | AuditKIT `evaluate`: Qwen3Guard-4B (primary), SafeTune keyword detectors, GlotLID fidelity, Gemini (secondary) | `audit.py`, `judge.py`, `gemini.py` | `runs/<arm>/judged.jsonl` |
-| 6. Analysis | Paired McNemar (Holm) and paired bootstrap over prompt ids; pre-registered contrasts only | `analyze.py`, `arms_report.py`, `controls_report.py` | `runs/arms_report.json`, `runs/controls_report.json` |
-| 7. Paper | Every number is a generated LaTeX macro with its source; figures carry provenance JSON | `paper_numbers.py`, `figures_core.py` | `paper/` |
+| 1. Data | MultiJail (harmful) + XSTest-safe translated with NLLB (benign), QA by GlotLID and back-translation chrF; CuratorKIT clean / dedup / provenance; ids kept only if parallel in all 10 languages | `data/` (`translate_xstest`, `build_data`, `build_pgp_val`) | `data/eval.jsonl` |
+| 2. Activations | Last-token residual stream at every layer (decoder only, hooks) | `activations/` (`mech`, `gate_acts`) | `runs/mech_*`, `runs/gate_acts_*` |
+| 3. Steering | Steering vectors, condition directions and gate thresholds fitted offline from calibration activations; built on SafeTune's `CASTModel`; ReSta weight streaming | `steering/` (`arms`, `steer`, `lazy_sd`, `choose_alpha`) | `arm_config.json` per run |
+| 4. Generation | AuditKIT `generate` with each arm (A100 via `scripts/colab_gen.sh`) | `generation/` (`run_arm`, `generate`) | `runs/<arm>/responses.jsonl` |
+| 5. Scoring | AuditKIT `evaluate`: Qwen3Guard-4B (primary), SafeTune keyword detectors, GlotLID fidelity, Gemini (secondary); judges validated against human labels | `scoring/` (`audit`, `judge`, `gemini`, `validate_judges`) | `runs/<arm>/judged.jsonl` |
+| 6. Analysis | Paired McNemar (Holm) and paired bootstrap over prompt ids; pre-registered reports, hypotheses H1/H3, gate diagnostics | `analysis/` (`analyze`, `arms_report`, `controls_report`, `h1`, `h3`, `gate_proxy`, `failure_gate`, `spoof`) | `runs/arms_report.json`, `runs/controls_report.json` |
+| 7. Paper | Every number is a generated LaTeX macro with its source; figures carry provenance JSON | `reporting/` (`paper_numbers/`, one module per paper part; `figures_results`, `figures_diagnostics`, `cohere_style`) | `paper/` |
+| Circuits | CircuitKIT discovery on a remote GPU and cross-language comparison (a negative result, appendix D) | `circuits/` (`circuit_spec`, `colab_circuit`, `compare`) | `runs/circuitkit/` |
 
-Supporting modules:
-- `common.py`: paths, languages, constrained GlotLID;
-- `lazy_sd.py`: streamed safetensors for ReSta;
-- `cohere_style.py`: figure style.
-
-Supporting scripts, each with a docstring stating its purpose, the paper section it serves and its outputs:
-- judge validation: `build_pgp_val.py`, `validate_judges.py`;
-- steering strength: `alpha_pick.py`;
-- hypotheses: `h1.py`, `h3.py`;
-- gate diagnostics: `gate_proxy.py`, `failure_gate.py`, `spoof.py`;
-- CircuitKIT: `colab_circuit.py`, `circuit_spec.py`, `circuits.py`;
-- logging and environment: `track.py` (MLflow), `smoke_test.py` (environment check).
+Shared: `common.py` (paths, languages, seeds, pinned revisions, constrained GlotLID) and `track.py` (MLflow).
 
 ## Reproduce
 
@@ -88,7 +82,7 @@ on the same A100 (`E0_a100`).
 ## Repository layout
 
 ```
-src/        pipeline and analysis (one module per stage; see the table above)
+src/        the refusal_parity package: one subpackage per pipeline stage (table above)
 scripts/    remote-GPU drivers, release build, data fetch, reproduction check
 tests/      unit tests: statistics, gate routing, label loading, data invariants
 paper/      LaTeX sources, generated numbers and tables, figures with provenance JSON, PDF

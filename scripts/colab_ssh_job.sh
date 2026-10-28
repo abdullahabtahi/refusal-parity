@@ -19,7 +19,7 @@ $C new -s $S --gpu $GPU </dev/null
 for t in 1 2 3 4 5 6; do R true && break || { echo "[driver] ssh not ready (try $t)"; sleep 15; }; done  # sshd lags READY
 R 'mkdir -p /root/.cache/huggingface'
 $C upload -s $S ~/.cache/huggingface/token /root/.cache/huggingface/token </dev/null
-$C upload -s $S src/colab_circuit.py /content/colab_circuit.py </dev/null
+$C upload -s $S src/refusal_parity/circuits/colab_circuit.py /content/colab_circuit.py </dev/null
 $C upload -s $S $SPEC /content/spec.json </dev/null
 for f in ${=UPLOAD:-}; do $C upload -s $S $f /content/${f:t} </dev/null; done
 # The job must not inherit the SSH session's fds, or this connection stays open (one SSH per runtime) and polls block.
