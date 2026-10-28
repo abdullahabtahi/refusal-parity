@@ -1,0 +1,8 @@
+{
+ "caption": "Gate-level false-firing of the EORS gate (\u03b5=.10, Tiny Aya Earth, layer-14 projection) on 106 benign test prompts per language, with the prompt as is or with a prefix; 95% Wilson intervals. Constrained GlotLID picks the threshold on the modified prompt, as at inference. Post hoc; mechanism open.",
+ "alt_text": "Grouped bars for five languages; original prompts 6-16%, prefixed prompts 37-82%.",
+ "provenance": {
+  "source": "runs/spoof/{spoof,control}.json",
+  "script": "src/figures_core.py:fig_brittle"
+ }
+}

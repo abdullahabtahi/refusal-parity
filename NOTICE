@@ -1,0 +1,42 @@
+Refusal Parity: is safety repair language-fair?
+Copyright 2026 Abdullah Ibn Mahdi Abtahi
+
+LICENSES IN THIS REPOSITORY
+  Code (src/, scripts/, tests/, Makefile, configuration)   Apache License 2.0      -> LICENSE
+  Data, model outputs, judgments, aggregates, figures,     CC BY-NC 4.0            -> LICENSE-DATA
+  the paper and its generated tables (paper/, hf/ exports)
+  Fonts (paper/fonts/: Space Grotesk, Space Mono)           SIL Open Font License 1.1 -> paper/fonts/OFL.txt
+
+CC BY-NC 4.0 covers this project's own contributions: the machine translations, model outputs, judge labels,
+aggregates, figures and paper. It is non-commercial because it inherits CC BY-NC 4.0 from the model outputs
+(Cohere Labs Tiny Aya) and the machine translations (Meta NLLB-200). Third-party text redistributed verbatim keeps
+its original licence (below): the MultiJail prompts (MIT), the English XSTest prompts (CC BY 4.0), the Aya
+red-teaming prompts (Apache-2.0) and the PolyGuardPrompts items (CC BY 4.0). The MIT and Apache-2.0 texts are in
+licenses/ of each data repository.
+
+THIRD-PARTY SOURCES (used, transformed or redistributed in derived form)
+  MultiJail (Deng et al., 2024)                  MIT License. Copyright (c) 2023 Multilingual NLP Team at Alibaba
+                                                  DAMO Academy (github.com/DAMO-NLP-SG/multilingual-safety-for-LLMs).
+                                                  https://huggingface.co/datasets/DAMO-NLP-SG/MultiJail
+  XSTest (Röttger et al., 2024)                  CC BY 4.0. https://huggingface.co/datasets/Paul/XSTest
+                                                  (translated into nine languages here with NLLB-200)
+  Aya Red-teaming (Aakanksha et al., 2024)       Apache License 2.0. https://huggingface.co/datasets/CohereLabs/aya_redteaming
+  PolyGuardPrompts (Kumar et al., 2025)          CC BY 4.0. https://huggingface.co/datasets/ToxicityPrompts/PolyGuardPrompts
+                                                  (human labels used for judge validation)
+  Tiny Aya Global / Earth / Base (Cohere Labs)   CC BY-NC 4.0 and the Cohere Labs (C4AI) Acceptable Use Policy.
+                                                  Model outputs in this release are subject to both.
+                                                  https://huggingface.co/CohereLabs/tiny-aya-global
+  NLLB-200 distilled 600M (Meta)                 CC BY-NC 4.0. https://huggingface.co/facebook/nllb-200-distilled-600M
+  Qwen3Guard-Gen-4B / 0.6B (Qwen)                Apache License 2.0 (judge labels). https://huggingface.co/Qwen/Qwen3Guard-Gen-4B
+  GlotLID (Kargaran et al., 2023)                Apache License 2.0 (language identification). https://huggingface.co/cis-lmu/glotlid
+  Gemini 3.5 Flash / Flash-Lite (Google)         Outputs used as a judge and as a closed-model comparator, generated
+                                                  on Vertex AI under the Google Cloud Service Terms and the Generative
+                                                  AI Prohibited Use Policy.
+
+The Tiny Aya tokenizer and chat-template files are not redistributed; they are downloaded from the gated Cohere
+Labs repositories at the pinned revisions in src/common.py (REVISIONS).
+
+CONTENT WARNING
+The data contain harmful requests from public red-teaming benchmarks. Model responses, some of them harmful, and
+the steering artifacts (which can be inverted to remove refusal) are distributed only through gated repositories,
+for safety research.

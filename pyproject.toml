@@ -1,0 +1,67 @@
+[project]
+name = "refusal-parity"
+version = "0.2.0"
+description = "Is safety repair language-fair? Auditing multilingual refusal steering on Tiny Aya with the Lexsi stack."
+readme = "README.md"
+requires-python = "==3.12.*"
+license = "Apache-2.0"
+authors = [{ name = "Abdullah Ibn Mahdi Abtahi" }]
+# Exact versions that produced every number in the paper (runs/mac_versions.txt; Colab: runs/*/versions.txt).
+dependencies = [
+  "torch==2.14.1",
+  "transformers==5.20.2",
+  "accelerate==1.15.0",
+  "safetensors==0.8.0",
+  "sentencepiece==0.2.2",
+  "datasets==5.1.0",
+  "huggingface-hub==1.33.0",
+  # Lexsi stack
+  "curatorkit==0.1.22",
+  "circuitkit==0.2.0",
+  "safetune==0.1.10",
+  "auditkit[transformers]==1.1.3",
+  "transformer-lens==3.8.0",
+  # analysis
+  "numpy==2.5.4",
+  "pandas==3.1.0",
+  "scipy==1.18.1",
+  "scikit-learn==1.9.1",
+  "statsmodels==0.15.0",
+  "matplotlib==3.11.2",
+  "sacrebleu==2.6.0",
+  "fasttext-wheel==0.9.2",
+  "mlflow==3.17.2",
+]
+
+[project.optional-dependencies]
+# Optional judge / comparator (paid API) and remote-GPU drivers.
+remote = ["google-genai==2.33.0", "google-colab-cli==0.7.5", "kaggle==2.2.5"]
+dev = ["ruff==0.17.3", "pytest==9.2.0"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src", "tests", "scripts"]
+extend-exclude = ["vendor", "hf", "kaggle_job", "scratch_colab"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = [
+  "E501",    # long lines are wrapped by the formatter where it can; data tables and URLs stay on one line
+  "E741",    # `l` is the language index throughout, matching the paper's notation
+  "SIM108",  # ternaries are not always clearer
+  "E731",    # short named lambdas are this codebase's idiom for one-line helpers
+  "RUF005",  # `a + [b]` reads fine for short lists
+  "RUF001", "RUF002", "RUF003",  # intentional non-ASCII (Greek letters, en dashes) in strings and comments
+]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+  "analyze", "arms", "arms_report", "audit", "cohere_style", "common", "figures", "gate_proxy", "generate",
+  "judge", "release_cards", "spoof", "steer",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"

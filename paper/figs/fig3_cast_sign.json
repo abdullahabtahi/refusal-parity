@@ -1,0 +1,8 @@
+{
+ "caption": "Per-language loss in harmful-vs-benign AUROC when gating with CAST's cosine-tanh score instead of the plain projection (English-fit direction, held-out test activations), against the share of benign prompts whose projection is negative. Prop. 1 predicts that CAST scores |projection|, so loss should grow with that share. n = 10 languages; correlation is descriptive (Pearson r = 0.89).",
+ "alt_text": "Scatter of ten languages: x is the share of benign prompts with negative projection (0.06 to 0.63), y is CAST's AUROC loss. Points rise from Chinese (lowest share, slightly negative loss) to Swahili (high share, about 0.23 loss).",
+ "provenance": {
+  "source": "../runs/mech_global/gate_proxy.json",
+  "script": "src/gate_proxy.py"
+ }
+}

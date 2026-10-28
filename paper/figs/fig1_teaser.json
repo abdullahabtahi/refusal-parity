@@ -1,0 +1,70 @@
+{
+ "caption": "(a) Every repair arm on Tiny Aya Earth (A100, \u03b1=1), judged by Qwen3Guard-4B on the MultiJail test split (209 harmful, 106 benign prompts per language, 10 languages): mean safe-response rate against the worst language's benign refusal rate. Arrows: from the unrepaired model (E0) to one pooled split-conformal threshold (CPOOL-S, \u03b5=.05), and from it to per-language split-conformal thresholds at the same budget (EORS-S); the two share steering vector, condition direction and calibration data. Paired bootstrap intervals are in Tables 1 and 2. (b) End-to-end greeting test (pre-registered secondary; \u03b5=.10): mean benign refusal without and with the English prefix \"Good morning.\" in every language.",
+ "alt_text": "Left: scatter of repair arms near 98-100% safety, spread from about 25% to 50% worst-language benign refusal; arrows run from the unrepaired model to CPOOL-S and on to EORS-S, which has the lowest worst-language refusal. Right: three dumbbells; the greeting raises mean benign refusal from about 11% to 13% for the unrepaired model and from about 20% to 64% for both threshold rules.",
+ "provenance": {
+  "points": {
+   "E0_a100": [
+    18.867924528301888,
+    94.30622009569379,
+    "th"
+   ],
+   "G-POOL_a100": [
+    50.0,
+    99.61722488038276,
+    "jv"
+   ],
+   "G-EN_a100": [
+    50.0,
+    99.85645933014354,
+    "zh"
+   ],
+   "CAST-EN_a100": [
+    45.28301886792453,
+    99.71291866028707,
+    "th"
+   ],
+   "G-CAL_a100": [
+    41.509433962264154,
+    99.56937799043061,
+    "jv"
+   ],
+   "CPOOL-S_e05_a100": [
+    34.90566037735849,
+    98.13397129186603,
+    "th"
+   ],
+   "EORS-S_e05_a100": [
+    25.471698113207548,
+    97.75119617224878,
+    "th"
+   ],
+   "RESTA_a100": [
+    45.28301886792453,
+    94.73684210526315,
+    "th"
+   ],
+   "NEG_a100": [
+    19.81132075471698,
+    89.42583732057415,
+    "th"
+   ]
+  },
+  "greeting": {
+   "E0": [
+    11.037735849056604,
+    13.490566037735851
+   ],
+   "CPOOL-S": [
+    20.66037735849057,
+    64.15094339622642
+   ],
+   "EORS-S": [
+    19.716981132075475,
+    63.584905660377345
+   ]
+  },
+  "judge": "q3g4b",
+  "source": "runs/*_a100/judged.jsonl (incl. *_greet_a100)",
+  "script": "src/figures_core.py:fig_teaser"
+ }
+}

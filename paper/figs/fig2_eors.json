@@ -1,0 +1,8 @@
+{
+ "caption": "Tiny Aya Earth on the A100 (\u03b1=1). CPOOL-S and EORS-S share steering vector, condition direction, calibration fold and false-refusal budget (\u03b5=.05); they differ only in whether the conformal threshold is pooled over languages or set per language. E0: unrepaired. Qwen3Guard-4B labels; 95% Wilson intervals; languages grouped high / medium / low resource. Paired changes with bootstrap intervals are in Table 2.",
+ "alt_text": "Two dot plots by language. Benign refusal: EORS-S is lower than CPOOL-S in Thai, Javanese and Bengali and slightly higher in high-resource languages. Harmful refusal: EORS-S is lower in Javanese, Bengali and Thai and higher in Italian and English.",
+ "provenance": {
+  "source": "runs/{E0,CPOOL-S_e05,EORS-S_e05}_a100/judged.jsonl",
+  "script": "src/figures_core.py:fig_eors"
+ }
+}

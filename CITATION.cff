@@ -1,0 +1,122 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite it as below."
+title: "A Repair Is Only as Fair as Its Gate: Auditing Multilingual Refusal Steering in a Small Multilingual Model"
+type: software
+authors:
+  - family-names: "Abtahi"
+    given-names: "Abdullah Ibn Mahdi"
+    affiliation: "Ingramin"
+    email: "abdullah.abtahi@ingramin.com"
+version: "0.2.0"
+date-released: "2026-10-28"
+license: Apache-2.0
+keywords:
+  - AI safety
+  - multilingual
+  - over-refusal
+  - activation steering
+  - conformal prediction
+  - Tiny Aya
+abstract: >-
+  An audit of whether refusal repair is language-fair on Cohere's Tiny Aya across ten languages in three
+  resource tiers, built on the Lexsi stack (CuratorKIT, CircuitKIT, SafeTune, AuditKIT). Code is Apache-2.0;
+  data and model outputs are CC-BY-NC-4.0 (inherited from Tiny Aya and NLLB).
+repository-artifact: "https://huggingface.co/datasets/abdullahabtahi/refusal-parity"
+preferred-citation:
+  type: report
+  title: "A Repair Is Only as Fair as Its Gate: Auditing Multilingual Refusal Steering in a Small Multilingual Model"
+  authors:
+    - family-names: "Abtahi"
+      given-names: "Abdullah Ibn Mahdi"
+      affiliation: "Ingramin"
+      email: "abdullah.abtahi@ingramin.com"
+  year: 2026
+  url: "https://huggingface.co/datasets/abdullahabtahi/refusal-parity"
+  notes: "Paper PDF at paper/refusal_parity.pdf in the dataset repository; version 0.2.0."
+references:
+  - type: article
+    title: "Tiny Aya: Bridging Scale and Multilingual Depth"
+    authors:
+      - family-names: "Salamanca"
+        given-names: "Alejandro R."
+      - name: "others"
+    year: 2026
+    identifiers:
+      - type: other
+        value: "arXiv:2603.11510"
+  - type: conference-paper
+    title: "Multilingual Jailbreak Challenges in Large Language Models"
+    authors:
+      - family-names: "Deng"
+        given-names: "Yue"
+      - family-names: "Zhang"
+        given-names: "Wenxuan"
+      - family-names: "Pan"
+        given-names: "Sinno Jialin"
+      - family-names: "Bing"
+        given-names: "Lidong"
+    conference:
+      name: "ICLR"
+    year: 2024
+    identifiers:
+      - type: other
+        value: "arXiv:2310.06474"
+  - type: conference-paper
+    title: "XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models"
+    authors:
+      - family-names: "Röttger"
+        given-names: "Paul"
+      - name: "others"
+    conference:
+      name: "NAACL"
+    year: 2024
+  - type: conference-paper
+    title: "The Multilingual Alignment Prism: Aligning Global and Local Preferences to Reduce Harm"
+    authors:
+      - name: "Aakanksha"
+      - name: "others"
+    conference:
+      name: "EMNLP"
+    year: 2024
+    identifiers:
+      - type: other
+        value: "arXiv:2406.18682"
+  - type: conference-paper
+    title: "PolyGuard: A Multilingual Safety Moderation Tool for 17 Languages"
+    authors:
+      - family-names: "Kumar"
+        given-names: "Priyanshu"
+      - name: "others"
+    conference:
+      name: "COLM"
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2504.04377"
+  - type: article
+    title: "No Language Left Behind: Scaling Human-Centered Machine Translation"
+    authors:
+      - name: "NLLB Team"
+    year: 2022
+    identifiers:
+      - type: other
+        value: "arXiv:2207.04672"
+  - type: conference-paper
+    title: "GlotLID: Language Identification for Low-Resource Languages"
+    authors:
+      - family-names: "Kargaran"
+        given-names: "Amir Hossein"
+      - name: "others"
+    conference:
+      name: "Findings of EMNLP"
+    year: 2023
+  - type: article
+    title: "Qwen3Guard Technical Report"
+    authors:
+      - family-names: "Zhao"
+        given-names: "Haiquan"
+      - name: "others"
+    year: 2025
+    identifiers:
+      - type: other
+        value: "arXiv:2510.14276"

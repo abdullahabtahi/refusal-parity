@@ -1,0 +1,8 @@
+{
+ "caption": "Gate level, Tiny Aya Earth, test activations (A100), EORS-S condition direction (layer 13, fitted on the calibration fit fold). For budgets \u03b5 = .02 to .30, thresholds come from the conformal fold, pooled over languages or per language; points show the realised mean and worst-language false-firing on benign test prompts (a) and mean detection of harmful test prompts in the low-resource (bn, sw, jv; solid) and high-resource (en, zh, it, vi; dashed) tiers (b). Exploratory.",
+ "alt_text": "Two line charts. Left: the per-language curve lies below the pooled one for worst-language false-firing. Right: at the same mean false-firing, per-language thresholds detect fewer low-resource and more high-resource harmful prompts than the pooled threshold.",
+ "provenance": {
+  "source": "runs/controls_report.json frontier",
+  "script": "src/figures_core.py:fig_frontier"
+ }
+}

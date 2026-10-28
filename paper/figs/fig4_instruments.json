@@ -1,0 +1,8 @@
+{
+ "caption": "(a) Agreement between SafeTune's English keyword refusal detectors and Qwen3Guard-4B refusal labels on all B0 responses (Tiny Aya Global), per language (H1, pre-registered). (b) Agreement of each judge with PolyGuardPrompts human labels on 1,400 items in seven languages (en, hi, it, th, zh, ar, ko); bars: mean over languages, whiskers: range. No low-resource language among the validation languages.",
+ "alt_text": "Left: kappa near 0.85-0.92 in English, zero in nine other languages. Right: refusal kappa about 0.9 for both judges; harm kappa 0.74 vs 0.43.",
+ "provenance": {
+  "source": "runs/B0/h1.json, runs/pgp_val/judge_validation.csv",
+  "script": "src/figures_core.py:fig_instruments"
+ }
+}

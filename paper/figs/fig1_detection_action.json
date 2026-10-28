@@ -1,0 +1,8 @@
+{
+ "caption": "Tiny Aya Global, last-token residual stream, test prompts (209 harmful, 106 benign per language). (a) AUROC of the pooled harmful-minus-benign direction per layer; (b) mean projection gap (harmful minus benign); (c) cosine between language-specific refusal directions at layer 17 (best mean AUROC). Directions fit on calibration prompts only.",
+ "alt_text": "Three panels. Detection AUROC rises to about 0.95-0.99 by mid layers for nine languages (grey); jv (blue) peaks lower and declines in late layers. The projection gap grows with depth and is smallest for jv. A cosine heatmap shows most language directions are similar (0.7-0.95), with zh and jv the least aligned.",
+ "provenance": {
+  "source": "../runs/mech_global/mech.npz",
+  "script": "src/mech.py"
+ }
+}

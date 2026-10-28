@@ -1,0 +1,11 @@
+{
+ "caption": "Gate-level parity on held-out activations (Tiny Aya Global, layer 14). EORS uses per-language split-conformal thresholds (eps=0.1); the single pooled threshold is set so its calibration mean false-fire rate matches EORS (test means: single 0.100, EORS 0.115). n=106 benign and n=209 harmful test prompts per language; whiskers are 95% Wilson intervals. Rates describe when steering fires, not end-to-end behaviour.",
+ "alt_text": "Two dumbbell panels by language, grouped by resource tier. Left: benign false-fire rate under a single threshold (light circles) vs EORS (dark diamonds). The single threshold is near zero for high-resource languages but peaks at th; EORS keeps every language in a narrow band around 10%, lowering th, bn and jv and raising the high-resource languages. Right: harmful-prompt trigger rate on an axis from 0.6 to 1.0; EORS raises it for high-resource languages and lowers it for th, bn and jv.",
+ "provenance": {
+  "source": [
+   "../runs/mech_global/calib_acts.pt",
+   "../runs/mech_global/test_acts.pt"
+  ],
+  "script": "src/gate_proxy.py:matched_comparison"
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "caption": "H6 end to end. Paired per-language change in harmful-prompt refusal between faithful CAST (cosine-tanh gate score) and G-EN (projection gate), which share the English steering vector and condition direction (Tiny Aya Earth, A100, Qwen3Guard-4B). x: share of benign calibration prompts with negative projection on the condition vector at layer 14, the quantity Remark 1 links to CAST's loss. Bars: 95% bootstrap over prompt ids. Pre-registered primary estimate (low-resource tier, bn/sw/jv pooled) in the title; no single language survives Holm. Spearman across languages \u03c1 = -0.23 (descriptive, n = 10).",
+ "alt_text": "Scatter of ten languages: all CAST minus G-EN refusal changes are at or below zero, about -4 to 0 points.",
+ "provenance": {
+  "neg_share": {
+   "en": 0.4888888888888889,
+   "zh": 0.14444444444444443,
+   "it": 0.35555555555555557,
+   "vi": 0.3,
+   "ar": 0.35555555555555557,
+   "ko": 0.23333333333333334,
+   "th": 0.2111111111111111,
+   "bn": 0.4444444444444444,
+   "sw": 0.4888888888888889,
+   "jv": 0.24444444444444444
+  },
+  "deltas": {
+   "en": [
+    -0.004784688995215311,
+    -0.014354066985645933,
+    0.0
+   ],
+   "zh": [
+    -0.014354066985645933,
+    -0.03349282296650718,
+    0.0
+   ],
+   "it": [
+    -0.023923444976076555,
+    -0.04784688995215311,
+    -0.004784688995215311
+   ],
+   "vi": [
+    -0.019138755980861243,
+    -0.03827751196172249,
+    -0.004784688995215311
+   ],
+   "ar": [
+    -0.019138755980861243,
+    -0.03827751196172249,
+    -0.004784688995215311
+   ],
+   "ko": [
+    0.004784688995215311,
+    0.0,
+    0.014354066985645933
+   ],
+   "th": [
+    -0.03827751196172249,
+    -0.06698564593301436,
+    -0.014354066985645933
+   ],
+   "bn": [
+    -0.03349282296650718,
+    -0.06220095693779904,
+    -0.009569377990430622
+   ],
+   "sw": [
+    -0.03827751196172249,
+    -0.06698564593301436,
+    -0.014354066985645933
+   ],
+   "jv": [
+    -0.019138755980861243,
+    -0.03827751196172249,
+    -0.004784688995215311
+   ]
+  },
+  "rho": -0.23220815841472026,
+  "layer": 14,
+  "source": "runs/{G-EN,CAST-EN}_a100/judged.jsonl, runs/mech_earth/calib_acts.pt",
+  "script": "src/figures_core.py:fig_cast"
+ }
+}

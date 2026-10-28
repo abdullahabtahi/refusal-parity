@@ -1,0 +1,43 @@
+# Python and environments
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Data and results: fetched from Hugging Face with `make data` (responses can contain harmful text)
+data/
+runs/
+mlruns/
+*.pt
+*.safetensors
+
+# Release staging (scripts/build_release.py)
+hf/
+
+# LaTeX intermediates (paper/main.pdf is committed)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+
+# Logs and local scratch
+*.log
+src/logs/
+src/cache/
+
+# Secrets and credentials: never commit
+.env
+.env.*
+*.pem
+*.key
+*.token
+hf_token*
+kaggle.json
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/
