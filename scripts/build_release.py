@@ -332,6 +332,8 @@ def main():
         mb = sum(p.stat().st_size for p in (OUT / name).rglob("*") if p.is_file()) / 1e6
         print(f"{name:26s} {n:4d} files {mb:8.1f} MB")
     write_cards()
+    # the HF Article draft: pasted into the Hub's article editor by the owner, never uploaded by this script
+    (OUT / "hf-article.md").write_text(cards.render("hf-article", {}))
     for name in ("refusal-parity", "refusal-parity-responses", "refusal-parity-steering"):
         write_checksums(OUT / name)
     check(OUT)
