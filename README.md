@@ -7,7 +7,6 @@
 [![Code: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue.svg)](LICENSE)
 [![Data: CC BY-NC 4.0](https://img.shields.io/badge/data-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE-DATA)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](pyproject.toml)
-[![Project page](https://img.shields.io/badge/project%20page-read%20the%20story-2e6a2b.svg)](https://abdullahabtahi.github.io/refusal-parity/)
 [![Data on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20data-refusal--parity-yellow.svg)](https://huggingface.co/datasets/abdullahabtahi/refusal-parity)
 
 **Abdullah Ibn Mahdi Abtahi** · Ingramin ·

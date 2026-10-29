@@ -234,6 +234,9 @@ def github_snapshot(base):
     shutil.copy(ROOT / "release" / "github.gitignore", base / ".gitignore")  # public ignores, not the workspace's
     # workspace-only tooling: sync.sh mirrors results to the author's private HF dataset
     (base / "scripts" / "sync.sh").unlink()
+    # shelved, unpublished drafts: the project page and the HF Article
+    shutil.rmtree(base / "release" / "site", ignore_errors=True)
+    (base / "release" / "cards" / "hf-article.md").unlink(missing_ok=True)
     make = (base / "Makefile").read_text()
     make = make.replace(" sync\n", "\n", 1)
     (base / "Makefile").write_text(make[: make.index("\nsync:")] + "\n")
@@ -320,9 +323,7 @@ def main():
         shutil.rmtree(OUT)
     # the repository README is rendered from its template too, before the GitHub snapshot copies it
     (ROOT / "README.md").write_text(cards.render("github-readme", {}))
-    # the project page (GitHub Pages serves docs/), rendered with the same macros
-    site = ROOT / "release" / "site" / "index.html"
-    (ROOT / "docs" / "index.html").write_text(cards.render("site", {}, path=site))
+    # shortcut: the project page drafts in release/site/ are shelved and not rendered; restore a render here to ship one
     parts = {
         "refusal-parity": open_repo,
         "refusal-parity-responses": responses_repo,
@@ -336,7 +337,8 @@ def main():
         print(f"{name:26s} {n:4d} files {mb:8.1f} MB")
     write_cards()
     # the HF Article draft: pasted into the Hub's article editor by the owner, never uploaded by this script
-    (OUT / "hf-article.md").write_text(cards.render("hf-article", {}))
+    if (cards.CARDS / "hf-article.md").exists():  # absent from the public snapshot
+        (OUT / "hf-article.md").write_text(cards.render("hf-article", {}))
     for name in ("refusal-parity", "refusal-parity-responses", "refusal-parity-steering"):
         write_checksums(OUT / name)
     check(OUT)
