@@ -22,6 +22,8 @@ open-source stack: **CuratorKIT → CircuitKIT → SafeTune → AuditKIT**.
 
 ## Main findings (Tiny Aya Earth, A100, Qwen3Guard-4B; v{{version}})
 
+![Teaser figure: (a) mean safe-response rate against worst-language benign refusal across repair arms on Tiny Aya Earth, with arrows from the unrepaired model (E0) to pooled split-conformal threshold (CPOOL-S) and per-language split-conformal thresholds (EORS-S); (b) mean benign refusal without and with the English greeting prefix across E0, CPOOL-S, and EORS-S.](docs/assets/fig1_teaser.png)
+
 Values are generated from the result files by the same macros as the paper: the threshold-rule rows from `runs/controls_report.json` and `runs/arms_report.json` (read by the dated pre-registration rules), the detector row from `runs/B0/h1.json`, the comparator row from `runs/GEM-lite/judged.jsonl`. 95% paired bootstrap intervals over prompt ids.
 
 | Finding | Estimate |
@@ -35,8 +37,6 @@ Values are generated from the result files by the same macros as the paper: the 
 | Closed comparator (Gemini 3.5 Flash-Lite) safe-response rate: same-family judge vs Qwen3Guard (post hoc) | {{GemGSrr}} vs {{GemQSrr}} |
 
 Equal false-refusal rates across languages whose gate-score distributions differ force unequal protection. Which error to equalise is a deployment decision; the paper reports both at matched budgets.
-
-![Teaser figure: (a) mean safe-response rate against worst-language benign refusal across repair arms on Tiny Aya Earth, with arrows from the unrepaired model (E0) to pooled split-conformal threshold (CPOOL-S) and per-language split-conformal thresholds (EORS-S); (b) mean benign refusal without and with the English greeting prefix across E0, CPOOL-S, and EORS-S.](docs/assets/fig1_teaser.png)
 
 ![Per-language refusal dot plots with Wilson intervals grouped by resource tier: (a) benign prompts refused and (b) harmful prompts refused for unrepaired E0, pooled threshold CPOOL-S, and per-language threshold EORS-S.](docs/assets/fig2_eors.png)
 
