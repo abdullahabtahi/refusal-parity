@@ -15,7 +15,7 @@ tags: [ai-safety, refusal, over-refusal, multilingual, low-resource-languages, a
 # Refusal Parity: is safety repair language-fair?
 
 **Abdullah Ibn Mahdi Abtahi** · Ingramin · v{{version}} ·
-[paper (PDF)](paper/refusal_parity.pdf) · code: forthcoming ·
+[paper (PDF)](paper/refusal_parity.pdf) · [code (GitHub)](https://github.com/abdullahabtahi/refusal-parity) ·
 gated companions: [responses](https://huggingface.co/datasets/abdullahabtahi/refusal-parity-responses),
 [steering artifacts](https://huggingface.co/abdullahabtahi/refusal-parity-steering)
 
