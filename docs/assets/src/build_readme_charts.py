@@ -26,7 +26,7 @@ if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
 from refusal_parity.analysis import analyze  # noqa: E402
-from refusal_parity.common import RUNS  # noqa: E402
+from refusal_parity.common import RUNS, TIERS  # noqa: E402
 from refusal_parity.reporting import figures_diagnostics  # noqa: E402
 
 SRC_DIR = ROOT / "docs" / "assets" / "src"
@@ -139,13 +139,12 @@ body {
 }
 .masthead-top {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+  justify-content: space-between;
+  align-items: center;
 }
 .masthead-kicker {
   font-family: 'Space Mono', monospace;
-  font-size: 12.5px;
+  font-size: 10.5px;
   color: var(--lime);
   letter-spacing: 0.06em;
 }
@@ -158,7 +157,7 @@ body {
 }
 .masthead-right {
   font-family: 'Space Mono', monospace;
-  font-size: 12.5px;
+  font-size: 10.5px;
   color: var(--ink-secondary);
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -172,7 +171,7 @@ body {
   padding: 9px 20px;
   border-bottom: 1px solid var(--rule-subtle);
   font-family: 'Space Mono', monospace;
-  font-size: 12.5px;
+  font-size: 10.2px;
   letter-spacing: 0.03em;
   background: var(--surface-alt);
   white-space: nowrap;
@@ -196,7 +195,7 @@ body {
   border-top: 1px solid var(--rule);
   background: var(--bg);
   font-family: 'Space Mono', monospace;
-  font-size: 12.5px;
+  font-size: 10.5px;
   color: var(--ink-secondary);
 }
 .legend-group {
@@ -205,7 +204,6 @@ body {
   gap: 22px;
 }
 .legend-item {
-  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -270,7 +268,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         ),
     )
 
-    # Coordinate mappers for Panel A (1:1 Native GitHub Scale: SVG viewBox 500 x 350 inside 515px panel)
+    # Coordinate mappers for Panel A (1:1 Native GitHub Scale: SVG viewBox 500 x 344 inside 515px panel)
     # Plot box: x in [52, 480], y in [22, 292]
     # Data domain: xlim = (10, 55), ylim = (88, 101.6)
     def ax_x(val: float) -> float:
@@ -287,7 +285,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         svg_a_parts.append(f'<line x1="52" y1="{py:.1f}" x2="480" y2="{py:.1f}" stroke="{col}" stroke-width="1"/>')
         svg_a_parts.append(
             f'<text x="44" y="{py + 4:.1f}" text-anchor="end" font-family="Space Mono" '
-            f'font-size="12.5" fill="#9cb095">{y_tick}</text>'
+            f'font-size="11.5" fill="#9cb095">{y_tick}</text>'
         )
 
     # Vertical grid lines & ticks (10 to 50 step 10)
@@ -300,7 +298,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         )
         svg_a_parts.append(
             f'<text x="{px:.1f}" y="313" text-anchor="middle" font-family="Space Mono" '
-            f'font-size="12.5" fill="#9cb095">{x_tick}%</text>'
+            f'font-size="11.5" fill="#9cb095">{x_tick}%</text>'
         )
 
     # Axis titles
@@ -336,7 +334,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
             f'<polygon points="{ex:.1f},{ey:.1f} {px1:.1f},{py1:.1f} {px2:.1f},{py2:.1f}" fill="{col_arr}"/>'
         )
 
-    # Label offsets (dx, dy, anchor) tuned for 500x350 1:1 native canvas
+    # Label offsets (dx, dy, anchor) tuned for 500x344 1:1 native canvas
     label_pos = {
         "E0_a100": (11, 18, "start", "#eef3ec", "500"),
         "CPOOL-S_e05_a100": (11, 16, "start", "#eef3ec", "700"),
@@ -382,7 +380,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         dx, dy, anchor, lcol, fw = label_pos[run]
         svg_a_parts.append(
             f'<text x="{px + dx:.1f}" y="{py + dy:.1f}" text-anchor="{anchor}" '
-            f'font-family="Space Mono" font-size="12.5" font-weight="{fw}" fill="{lcol}">{ARM_NAMES[run]}</text>'
+            f'font-family="Space Mono" font-size="11.5" font-weight="{fw}" fill="{lcol}">{ARM_NAMES[run]}</text>'
         )
 
     # Callout box for LRL harmful-prompt refusal trade-off
@@ -393,16 +391,16 @@ def build_fig1_teaser() -> tuple[str, dict]:
     )
     svg_a_parts.append(
         f'<text x="{bx + 122:.1f}" y="{by + 20:.1f}" text-anchor="middle" '
-        'font-family="Space Mono" font-size="12.5" font-weight="700" fill="#d48c6a">'
+        'font-family="Space Mono" font-size="11" font-weight="700" fill="#d48c6a">'
         f"EORS-S vs CPOOL-S: {lrl_str} pts</text>"
     )
     svg_a_parts.append(
         f'<text x="{bx + 122:.1f}" y="{by + 38:.1f}" text-anchor="middle" '
-        'font-family="Space Grotesk" font-size="12.5" fill="#9cb095">'
+        'font-family="Space Grotesk" font-size="11.5" fill="#9cb095">'
         "Low-resource harmful refusal (ε=.05)</text>"
     )
 
-    # Coordinate mappers for Panel B (1:1 Native GitHub Scale: SVG viewBox 368 x 350 inside 384px panel)
+    # Coordinate mappers for Panel B (1:1 Native GitHub Scale: SVG viewBox 368 x 344 inside 384px panel)
     # Plot box: x in [74, 344], y in [22, 292]
     # Data domain: xlim = (0, 85)
     def bx_x(val: float) -> float:
@@ -420,7 +418,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         )
         svg_b_parts.append(
             f'<text x="{px:.1f}" y="313" text-anchor="middle" font-family="Space Mono" '
-            f'font-size="12.5" fill="#9cb095">{x_tick}%</text>'
+            f'font-size="11.5" fill="#9cb095">{x_tick}%</text>'
         )
 
     svg_b_parts.append('<line x1="74" y1="292" x2="344" y2="292" stroke="#263d1f" stroke-width="1"/>')
@@ -437,7 +435,7 @@ def build_fig1_teaser() -> tuple[str, dict]:
         label_col = "#b6f012" if name == "EORS-S" else "#eef3ec"
         svg_b_parts.append(
             f'<text x="64" y="{ry + 4:.1f}" text-anchor="end" font-family="Space Mono" '
-            f'font-size="12.5" font-weight="700" fill="{label_col}">{name}</text>'
+            f'font-size="12" font-weight="700" fill="{label_col}">{name}</text>'
         )
         # Connecting bar
         svg_b_parts.append(
@@ -455,29 +453,29 @@ def build_fig1_teaser() -> tuple[str, dict]:
         if x1 - x0 < 12:
             svg_b_parts.append(
                 f'<text x="{px1 + 11:.1f}" y="{ry + 4:.1f}" font-family="Space Mono" '
-                f'font-size="12.5" fill="#eef3ec">{x0:.0f}% → {x1:.0f}%</text>'
+                f'font-size="11.5" fill="#eef3ec">{x0:.0f}% → {x1:.0f}%</text>'
             )
         else:
             svg_b_parts.append(
                 f'<text x="{px0:.1f}" y="{ry - 12:.1f}" text-anchor="middle" font-family="Space Mono" '
-                f'font-size="12.5" fill="#9cb095">{x0:.0f}%</text>'
+                f'font-size="11.5" fill="#9cb095">{x0:.0f}%</text>'
             )
             svg_b_parts.append(
                 f'<text x="{px1 + 11:.1f}" y="{ry + 4:.1f}" font-family="Space Mono" '
-                f'font-size="12.5" font-weight="700" fill="#d48c6a">{x1:.0f}%</text>'
+                f'font-size="11.5" font-weight="700" fill="#d48c6a">{x1:.0f}%</text>'
             )
 
     # Inline legend inside Panel B top-right
     svg_b_parts.append(
-        '<rect x="192" y="24" width="168" height="52" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>'
+        '<rect x="192" y="24" width="154" height="52" fill="#0d1b0a" stroke="#263d1f" stroke-width="1"/>'
     )
     svg_b_parts.append('<circle cx="208" cy="40" r="5.5" fill="#789a6d"/>')
     svg_b_parts.append(
-        '<text x="222" y="44" font-family="Space Mono" font-size="12.5" fill="#eef3ec">Original prompt</text>'
+        '<text x="222" y="44" font-family="Space Mono" font-size="11" fill="#eef3ec">Original prompt</text>'
     )
     svg_b_parts.append('<circle cx="208" cy="61" r="5.5" fill="#d48c6a"/>')
     svg_b_parts.append(
-        '<text x="222" y="65" font-family="Space Mono" font-size="12.5" fill="#d48c6a">+ "Good morning."</text>'
+        '<text x="222" y="65" font-family="Space Mono" font-size="11" fill="#d48c6a">+ "Good morning."</text>'
     )
 
     html = f"""<!DOCTYPE html>
@@ -494,8 +492,8 @@ body {{
   padding: 15px 18px;
   gap: 5px;
 }}
-.masthead-kicker {{ font-size: 12.5px; }}
-.masthead-right {{ font-size: 12.5px; }}
+.masthead-kicker {{ font-size: 11px; }}
+.masthead-right {{ font-size: 10.5px; }}
 .masthead-title {{ font-size: 17.5px; line-height: 1.34; }}
 .two-col {{
   display: grid;
@@ -509,7 +507,7 @@ body {{
 .panel:last-child {{ border-right: none; }}
 .panel-index {{
   padding: 8px 14px;
-  font-size: 12.5px;
+  font-size: 10px;
   gap: 12px;
 }}
 .plot-canvas {{
@@ -517,7 +515,7 @@ body {{
 }}
 .footer-strip {{
   padding: 9px 18px;
-  font-size: 12.5px;
+  font-size: 10.5px;
 }}
 .legend-group {{ gap: 16px; }}
 .legend-item {{ gap: 6px; }}
@@ -531,7 +529,7 @@ body {{
       <div class="masthead-right">
         <span class="muted">MODEL:</span> TINY AYA EARTH<span class="sep">/</span>
         <span class="muted">JUDGE:</span> QWEN3GUARD-4B<span class="sep">/</span>
-        <span class="muted">TEST:</span> {n_h} HARMFUL · {n_b} BENIGN PER LANGUAGE
+        <span class="muted">SPLIT:</span> {n_h}H · {n_b}B / LANG
       </div>
     </div>
     <div class="masthead-title">{title_line1}<br>{title_line2}</div>
@@ -541,6 +539,7 @@ body {{
     <div class="panel">
       <div class="panel-index">
         <span class="panel-num">01A // GATED REPAIRS (ε = 0.05)</span>
+        <span class="panel-sub">SAFETY VS. WORST-LANGUAGE REFUSAL</span>
       </div>
       <div class="plot-canvas">
         <svg viewBox="0 0 500 344" width="100%" height="344">
@@ -552,6 +551,7 @@ body {{
     <div class="panel">
       <div class="panel-index">
         <span class="panel-num">01B // GREETING TEST (ε = 0.10)</span>
+        <span class="panel-sub">PREFIX STRESS TEST</span>
       </div>
       <div class="plot-canvas">
         <svg viewBox="0 0 368 344" width="100%" height="344">
@@ -584,6 +584,7 @@ body {{
         <span>ReSta</span>
       </span>
     </div>
+    <div style="color:var(--ink-muted);">SOURCE: runs/*_a100/judged.jsonl</div>
   </div>
 </div>
 </body>
@@ -654,7 +655,7 @@ def build_fig2_eors() -> tuple[str, dict]:
             )
             parts.append(
                 f'<text x="{tx:.1f}" y="403" text-anchor="middle" font-family="Space Mono" '
-                f'font-size="12.5" fill="#9cb095">{tick}%</text>'
+                f'font-size="11.5" fill="#9cb095">{tick}%</text>'
             )
 
         parts.append(f'<line x1="{x0_px}" y1="{y1_px}" x2="{x1_px}" y2="{y1_px}" stroke="#263d1f" stroke-width="1"/>')
@@ -730,7 +731,7 @@ def build_fig2_eors() -> tuple[str, dict]:
                 parts.append(
                     f'<text x="{tx_label:.1f}" y="{ty:.1f}" text-anchor="middle" '
                     f'transform="rotate(90 {tx_label:.1f} {ty:.1f})" font-family="Space Mono" '
-                    f'font-size="12.5" font-weight="700" letter-spacing="0.06em" fill="{t_col}">{tier_label}</text>'
+                    f'font-size="11" font-weight="700" letter-spacing="0.06em" fill="{t_col}">{tier_label}</text>'
                 )
 
         axis_label = (
@@ -748,6 +749,10 @@ def build_fig2_eors() -> tuple[str, dict]:
     svg_brr = render_dot_panel("BRR", (0, 50), show_labels=True, show_tiers=False, svg_w=446)
     svg_hrr = render_dot_panel("HRR", (40, 100), show_labels=False, show_tiers=True, svg_w=419)
 
+    tiers_line = " · ".join(  # from the study's tier map, never typed
+        f"{name} ({', '.join(lang.upper() for lang in TIERS if TIERS[lang] == tier)})"
+        for tier, name in (("HRL", "HIGH"), ("MRL", "MED"), ("LRL", "LOW"))
+    )
     html = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -762,8 +767,8 @@ body {{
   padding: 15px 18px;
   gap: 5px;
 }}
-.masthead-kicker {{ font-size: 12.5px; }}
-.masthead-right {{ font-size: 12.5px; }}
+.masthead-kicker {{ font-size: 11px; }}
+.masthead-right {{ font-size: 10.5px; }}
 .masthead-title {{ font-size: 17.2px; line-height: 1.34; }}
 .two-col {{
   display: grid;
@@ -777,7 +782,7 @@ body {{
 .panel:last-child {{ border-right: none; }}
 .panel-index {{
   padding: 8px 14px;
-  font-size: 12.5px;
+  font-size: 10px;
   gap: 12px;
 }}
 .plot-canvas {{
@@ -785,7 +790,7 @@ body {{
 }}
 .footer-strip {{
   padding: 9px 18px;
-  font-size: 12.5px;
+  font-size: 10px;
 }}
 .legend-group {{ gap: 14px; }}
 .legend-item {{ gap: 6px; }}
@@ -808,6 +813,7 @@ body {{
     <div class="panel">
       <div class="panel-index">
         <span class="panel-num">02A // BENIGN PROMPTS REFUSED (%)</span>
+        <span class="panel-sub">FALSE-REFUSAL PARITY</span>
       </div>
       <div class="plot-canvas">
         <svg viewBox="0 0 446 432" width="446" height="432">
@@ -819,6 +825,7 @@ body {{
     <div class="panel">
       <div class="panel-index">
         <span class="panel-num">02B // HARMFUL PROMPTS REFUSED (%)</span>
+        <span class="panel-sub">PROTECTION COST BY TIER</span>
       </div>
       <div class="plot-canvas">
         <svg viewBox="0 0 419 432" width="419" height="432">
@@ -843,6 +850,7 @@ body {{
         <span style="color:#b6f012; font-weight:700;">Per-language τ_ℓ (EORS-S)</span>
       </span>
     </div>
+    <div style="color:var(--ink-muted);">TIERS: {tiers_line}</div>
   </div>
 </div>
 </body>

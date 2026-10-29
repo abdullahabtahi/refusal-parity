@@ -7,6 +7,7 @@ Usage:
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -18,6 +19,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[3]
 HTML_PATH = ROOT / "docs" / "assets" / "src" / "pipeline.html"
 OUT_PATH = ROOT / "docs" / "assets" / "pipeline.png"
+NUMBERS_TEX = ROOT / "paper" / "numbers.tex"
 
 
 def find_chrome() -> str:
@@ -48,6 +50,8 @@ def find_chrome() -> str:
 
 
 def build() -> None:
+    m = re.search(r"\\newcommand\{\\NValidation\}\{([^}]+)\}", NUMBERS_TEX.read_text())
+    assert m and f"VS {m.group(1)} HUMAN LABELS" in HTML_PATH.read_text(), "NValidation mismatch with paper/numbers.tex"
     chrome = find_chrome()
     with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp:
         tmp_png = Path(tmp.name)
@@ -59,7 +63,7 @@ def build() -> None:
                 "--headless",
                 "--disable-gpu",
                 "--force-device-scale-factor=2",
-                "--window-size=1420,650",
+                "--window-size=900,900",
                 f"--screenshot={tmp_png}",
                 HTML_PATH.resolve().as_uri(),
             ],
@@ -69,11 +73,12 @@ def build() -> None:
 
         im = Image.open(tmp_png).convert("RGB")
         arr = np.array(im)
-        bg_rgb = arr[-1, -1]
-        diff = np.max(np.abs(arr.astype(int) - bg_rgb.astype(int)), axis=2)
-        ys, _ = np.where(diff > 2)
-        y_max = min(im.height, int(ys.max()) + 40)
-        im_cropped = im.crop((0, 0, im.width, y_max))
+        bg_rgb = np.array([12, 24, 9])
+        diff = np.max(np.abs(arr.astype(int) - bg_rgb), axis=2)
+        ys, xs = np.where(diff > 2)
+        y_max = min(im.height, int(ys.max()) + 1)
+        x_max = min(im.width, int(xs.max()) + 1)
+        im_cropped = im.crop((0, 0, x_max, y_max))
 
         im_q = im_cropped.quantize(colors=256, method=Image.Quantize.FASTOCTREE, dither=Image.Dither.NONE)
         OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
