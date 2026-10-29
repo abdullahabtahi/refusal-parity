@@ -104,6 +104,8 @@ exported from that same fit, so they equal what the runs applied, for use outsid
 
 The evaluation is in the paper and the open repository.
 
+![Teaser figure: (a) mean safe-response rate against worst-language benign refusal across repair arms on Tiny Aya Earth, with arrows from the unrepaired model (E0) to pooled split-conformal threshold (CPOOL-S) and per-language split-conformal thresholds (EORS-S); (b) mean benign refusal without and with the English greeting prefix across E0, CPOOL-S, and EORS-S.](https://huggingface.co/datasets/abdullahabtahi/refusal-parity/resolve/main/assets/fig1_teaser.png)
+
 **At a matched false-refusal budget ε = 0.05**, `EORS-S` lowers worst-language benign refusal by {{CtlFiveMaxBrr}}
 pp against `CPOOL-S`. It costs {{CtlFiveLrlHrr}} pp of harmful-prompt refusal in the low-resource tier.
 

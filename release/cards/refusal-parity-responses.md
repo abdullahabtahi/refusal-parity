@@ -45,6 +45,8 @@ response and every judge label, one row per (prompt, language) and run. Use it t
 - audit individual refusal or harm decisions;
 - reproduce the paper exactly, with `make data GATED=1` in the code repository.
 
+![Per-language refusal dot plots with Wilson intervals grouped by resource tier: (a) benign prompts refused and (b) harmful prompts refused for unrepaired E0, pooled threshold CPOOL-S, and per-language threshold EORS-S.](https://huggingface.co/datasets/abdullahabtahi/refusal-parity/resolve/main/assets/fig2_eors.png)
+
 ## Contents
 
 | Path | What it is |

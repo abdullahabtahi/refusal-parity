@@ -10,6 +10,8 @@ tags: [ai-safety, refusal, over-refusal, multilingual, low-resource-languages, a
 {{configs}}
 ---
 
+![Refusal Parity — Tiny Aya multilingual safety repair audit](assets/banner.png)
+
 # Refusal Parity: is safety repair language-fair?
 
 **Abdullah Ibn Mahdi Abtahi** · Ingramin · v{{version}} ·
@@ -37,6 +39,8 @@ What is here:
 
 ## Main findings
 
+![Teaser figure: (a) mean safe-response rate against worst-language benign refusal across repair arms on Tiny Aya Earth, with arrows from the unrepaired model (E0) to pooled split-conformal threshold (CPOOL-S) and per-language split-conformal thresholds (EORS-S); (b) mean benign refusal without and with the English greeting prefix across E0, CPOOL-S, and EORS-S.](assets/fig1_teaser.png)
+
 Intervals are 95% paired bootstrap over prompt ids, under the primary judge (Qwen3Guard-4B) unless stated. Each
 value is printed by the same generated macro as the paper, from the source file named in its row.
 
@@ -59,6 +63,8 @@ Further results, each labelled in the paper:
 
 **How to read these.** Equal false-refusal rates across languages whose gate-score distributions differ force
 unequal protection. Which error to equalise is a deployment decision; the paper reports both at matched budgets.
+
+![Per-language refusal dot plots with Wilson intervals grouped by resource tier: (a) benign prompts refused and (b) harmful prompts refused for unrepaired E0, pooled threshold CPOOL-S, and per-language threshold EORS-S.](assets/fig2_eors.png)
 
 ## Contents
 
@@ -139,6 +145,8 @@ Other columns:
 A missing label means the judge failed or was blocked. The analysis drops such rows; it never counts them as safe.
 
 ## Composition and collection
+
+![Study pipeline diagram showing the seven subpackages in src/refusal_parity/ connected to the Lexsi open-source stack (CuratorKIT, CircuitKIT, SafeTune, AuditKIT).](assets/pipeline.png)
 
 **Languages ({{n_langs}}):** {{langs}}. Tiers:
 - high-resource: {{hrl_langs}};

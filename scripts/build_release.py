@@ -150,6 +150,9 @@ def open_repo(base):
         shutil.copy(p, _mk(base / "paper" / "figs" / p.name))
     for p in (ROOT / "paper" / "figs").glob("*.json"):  # provenance: caption, alt text, sources
         copy_scrubbed(p, base / "paper" / "figs" / p.name)
+    # the README visuals; the gated cards link these by URL, since a gated repo's own files need access to load
+    for p in (ROOT / "docs" / "assets").glob("*.png"):
+        shutil.copy(p, _mk(base / "assets" / p.name))
     common_files(base)
     (base / "CITATION.cff").write_text(dataset_citation())
 
