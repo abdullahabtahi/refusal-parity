@@ -115,9 +115,9 @@ def configs(entries, default=None):
     return "\n".join(lines)
 
 
-def render(name, extra):
+def render(name, extra, path=None):
     values = {**macros(), **data_facts(), **extra}
-    text = (CARDS / f"{name}.md").read_text()
+    text = (path or CARDS / f"{name}.md").read_text()
     unknown = sorted(set(PLACEHOLDER.findall(text)) - values.keys())
     if unknown:
         raise KeyError(f"release/cards/{name}.md: unknown placeholders {unknown}")

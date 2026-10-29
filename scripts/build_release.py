@@ -320,6 +320,9 @@ def main():
         shutil.rmtree(OUT)
     # the repository README is rendered from its template too, before the GitHub snapshot copies it
     (ROOT / "README.md").write_text(cards.render("github-readme", {}))
+    # the project page (GitHub Pages serves docs/), rendered with the same macros
+    site = ROOT / "release" / "site" / "index.html"
+    (ROOT / "docs" / "index.html").write_text(cards.render("site", {}, path=site))
     parts = {
         "refusal-parity": open_repo,
         "refusal-parity-responses": responses_repo,
